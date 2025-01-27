@@ -19,3 +19,19 @@ class Player {
         this.element.style.left = `${this.x}px`
     }
 }
+
+const grid = document.getElementById('grid');
+const player = new Player(grid)
+
+let lastTime = 0;
+function gameLoop(timestamp){
+    const deltaTime = (timestamp - lastTime) / 1000;
+    lastTime = timestamp;
+
+    player.move(1, deltaTime);
+
+    requestAnimationFrame(gameLoop)
+}
+
+requestAnimationFrame(gameLoop)
+
