@@ -1,10 +1,10 @@
 # Make your game - To-Do List
 
 ## Core Game Engine Development
-- [ ] Set up basic HTML/DOM structure
-- [ ] Implement requestAnimationFrame game loop
+- [X] Set up basic HTML/DOM structure
+- [⌛] Implement requestAnimationFrame game loop
 - [ ] Create performance monitoring system
-- [ ] Implement smooth keyboard controls
+- [⌛] Implement smooth keyboard controls
 - [ ] Set up collision detection system
 - [ ] Create game state management system
 - [ ] Implement pause functionality
@@ -37,11 +37,11 @@
 - [ ] Design story-related visual elements
 
 ## Scoreboard & Backend
-- [ ] Set up Go server
-- [ ] Implement API endpoints
-  - [ ] POST endpoint for submitting scores
-  - [ ] GET endpoint for retrieving scores
-- [ ] Create score data structure
+- [X] Set up Go server
+- [X] Implement API endpoints
+  - [X] POST endpoint for submitting scores
+  - [X] GET endpoint for retrieving scores
+- [X] Create score data structure
 - [ ] Implement score sorting system
 - [ ] Design scoreboard UI
   - [ ] Display top 5 scores
@@ -52,7 +52,7 @@
 ## Testing & Optimization
 - [ ] Test frame rate consistency
 - [ ] Monitor and optimize DOM updates
-- [ ] Test keyboard input responsiveness
+- [⌛] Test keyboard input responsiveness
 - [ ] Verify score submission/retrieval
 - [ ] Cross-browser testing
 - [ ] Performance profiling using Dev Tools
