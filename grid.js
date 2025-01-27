@@ -35,3 +35,16 @@ const createEnnemies = (ennemiesCount) => {
 }
 
 createEnnemies(50);
+
+const createProtectionBlocks = () => {
+    const lineOfProtection = document.getElementById('line-of-protection');
+    for (let i = 0; i < 4; i++) {
+        const block = document.createElement('div');
+        block.className = 'protection-block';
+        block.id = `protection-block-${i}`;
+        lineOfProtection.appendChild(block);
+    }
+}
+
+createProtectionBlocks();
+

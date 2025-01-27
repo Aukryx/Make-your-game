@@ -75,17 +75,35 @@ header {
 }
 
 #line-of-protection {
-    height: 20px;
-    background-color: #0f0;
+    display: flex;
+    justify-content: space-around;
     width: 100%;
+    position: absolute;
+    bottom: 100px;
 }
 
-#spaceship {
-    text-align: center;
-    padding: 10px;
-    background-color: #00f;
-    color: #fff;
+.protection-block {
+    width: 60px;
+    height: 60px;
+    background-color: #0f0;
+    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
 }
+
+
+#spaceship {
+    width: 50px; 
+    height: 30px; 
+    background-color: #00f;
+    position: absolute;
+    bottom: 50px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px; 
+}
+
 
 #pause-menu {
     position: absolute;
