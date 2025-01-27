@@ -23,6 +23,8 @@ func LaunchServer(port string) {
 
 		fs := http.FileServer(http.Dir("./web/"))
 		http.Handle("/web/", http.StripPrefix("/web/", fs))
+		fs = http.FileServer(http.Dir("./players/"))
+		http.Handle("/players/", http.StripPrefix("/players/", fs))
 		http.HandleFunc("/", GameHandler)
 
 		fmt.Printf("Starting server on http://localhost%s\n", server.Addr)
