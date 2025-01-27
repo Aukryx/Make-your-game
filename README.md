@@ -1,2 +1,85 @@
-# Make-your-game
-(TO DO)
+# Make your game - To-Do List
+
+## Core Game Engine Development
+- [ ] Set up basic HTML/DOM structure
+- [ ] Implement requestAnimationFrame game loop
+- [ ] Create performance monitoring system
+- [ ] Implement smooth keyboard controls
+- [ ] Set up collision detection system
+- [ ] Create game state management system
+- [ ] Implement pause functionality
+- [ ] Test and optimize for 60 FPS performance
+
+## UI Elements
+- [ ] Design and implement score display
+- [ ] Create countdown timer/game clock
+- [ ] Add lives counter
+- [ ] Design pause menu
+  - [ ] Continue option
+  - [ ] Restart option
+- [ ] Implement game over screen
+
+## Map System
+- [ ] Create tileset image
+- [ ] Implement tile map data structure
+- [ ] Develop map generation engine
+- [ ] Create 3 distinct map layouts
+- [ ] Optimize map rendering
+- [ ] Implement viewport/camera system (if needed)
+
+## Story Mode
+- [ ] Write game story
+  - [ ] Introduction sequence
+  - [ ] Mid-game story developments
+  - [ ] Multiple endings (win/lose scenarios)
+- [ ] Implement story triggers based on game events
+- [ ] Create story display system
+- [ ] Design story-related visual elements
+
+## Scoreboard & Backend
+- [ ] Set up Go server
+- [ ] Implement API endpoints
+  - [ ] POST endpoint for submitting scores
+  - [ ] GET endpoint for retrieving scores
+- [ ] Create score data structure
+- [ ] Implement score sorting system
+- [ ] Design scoreboard UI
+  - [ ] Display top 5 scores
+  - [ ] Add pagination
+  - [ ] Show player percentile
+- [ ] Add player name input system
+
+## Testing & Optimization
+- [ ] Test frame rate consistency
+- [ ] Monitor and optimize DOM updates
+- [ ] Test keyboard input responsiveness
+- [ ] Verify score submission/retrieval
+- [ ] Cross-browser testing
+- [ ] Performance profiling using Dev Tools
+  - [ ] Check paint flashing
+  - [ ] Monitor FPS
+  - [ ] Analyze JavaScript performance
+  - [ ] Check for layout thrashing
+
+## Documentation
+- [ ] Document game controls
+- [ ] Write API documentation
+- [ ] Add setup instructions
+- [ ] Include performance optimization notes
+- [ ] Document tile map structure
+- [ ] Add code comments for complex logic
+
+## Final Polish
+- [ ] Smooth transitions between game states
+- [ ] Add sound effects (optional)
+- [ ] Implement visual feedback for player actions
+- [ ] Add loading states
+- [ ] Final performance optimization
+- [ ] Bug fixing
+
+## Project Management
+- [ ] Set up version control
+- [ ] Create branching strategy
+- [ ] Regular performance testing
+- [ ] Code review process
+- [ ] Regular backups
