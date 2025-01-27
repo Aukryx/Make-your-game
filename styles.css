@@ -1,0 +1,12 @@
+body{
+    background-color: lightblue;
+}
+
+#spaceship{
+background-color: red;
+position: absolute;
+bottom: 0;
+padding-bottom: 3px;
+left: 50%;
+transform: translateX(-50%);
+}
