@@ -1,14 +1,17 @@
-body{
-    background-color: lightblue;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #000;
+    color: #fff;
 }
 
-#spaceship{
-background-color: red;
-position: absolute;
-bottom: 0;
-padding-bottom: 3px;
-left: 50%;
-transform: translateX(-50%);
+header {
+    background-color: #333;
+    padding: 10px;
 }
 
 .stats-container {
@@ -17,19 +20,80 @@ transform: translateX(-50%);
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    padding: 10px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
 }
 
 .stats-container h2 {
     margin: 0;
-    font-size: 1.2em;
+    font-size: 1rem;
 }
 
-@media (max-width: 768px) {
-    .stats-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+#grid {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+}
+
+.line {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.ennemy {
+    width: 30px;
+    height: 30px;
+    background-color: yellow;
+    border-radius: 50%;
+    margin: 0 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ennemy::before, .ennemy::after {
+    content: '';
+    position: absolute;
+    background-color: #000;
+    border-radius: 50%;
+}
+
+.ennemy::before {
+    width: 8px;
+    height: 8px;
+    top: 5px;
+    left: 5px;
+}
+
+.ennemy::after {
+    width: 8px;
+    height: 8px;
+    top: 5px;
+    right: 5px;
+}
+
+#line-of-protection {
+    height: 20px;
+    background-color: #0f0;
+    width: 100%;
+}
+
+#spaceship {
+    text-align: center;
+    padding: 10px;
+    background-color: #00f;
+    color: #fff;
+}
+
+#pause-menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
 }
