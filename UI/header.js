@@ -2,7 +2,6 @@ const score = document.getElementById("score");
 const highscore = document.getElementById("highscore");
 const timer = document.getElementById("time");
 const lives = document.getElementById("lives");
-const pauseMenu = document.getElementById("pause-menu");
 
 let time = 0;
 let timerStarted = false;
