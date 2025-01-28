@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"sort"
 	"text/template"
 	"time"
 )
@@ -97,6 +98,16 @@ func saveScore(score Score) error {
 
 	// Append the new score
 	scores = append(scores, score)
+
+	// Sort scores by personal score in descending order
+	sort.Slice(scores, func(i, j int) bool {
+		return scores[i].Score > scores[j].Score
+	})
+
+	// Update ranks based on the sorted scores
+	for i := range scores {
+    scores[i].Rank = i + 1
+  }
 
 	data, err := json.MarshalIndent(scores, "", "  ")
 	if err != nil {

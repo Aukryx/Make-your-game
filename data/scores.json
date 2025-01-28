@@ -6,33 +6,45 @@
     "Time": "13:47:15"
   },
   {
-    "Name": "Test Player",
-    "Rank": 1,
-    "Score": 267,
-    "Time": "2025-01-27T13:19:59.561Z"
+    "Name": "Player 1",
+    "Rank": 2,
+    "Score": 1000,
+    "Time": "10:00"
+  },
+  {
+    "Name": "Player 1",
+    "Rank": 3,
+    "Score": 1000,
+    "Time": "10:00"
   },
   {
     "Name": "Test Player",
-    "Rank": 1,
-    "Score": 19,
-    "Time": "2025-01-27T13:20:12.191Z"
+    "Rank": 4,
+    "Score": 703,
+    "Time": "2025-01-27T13:20:55.942Z"
   },
   {
     "Name": "Test Player",
-    "Rank": 1,
-    "Score": 39,
-    "Time": "2025-01-27T13:20:14.445Z"
-  },
-  {
-    "Name": "Test Player",
-    "Rank": 1,
+    "Rank": 5,
     "Score": 361,
     "Time": "2025-01-27T13:20:46.054Z"
   },
   {
     "Name": "Test Player",
-    "Rank": 1,
-    "Score": 703,
-    "Time": "2025-01-27T13:20:55.942Z"
+    "Rank": 6,
+    "Score": 267,
+    "Time": "2025-01-27T13:19:59.561Z"
+  },
+  {
+    "Name": "Test Player",
+    "Rank": 7,
+    "Score": 39,
+    "Time": "2025-01-27T13:20:14.445Z"
+  },
+  {
+    "Name": "Test Player",
+    "Rank": 8,
+    "Score": 19,
+    "Time": "2025-01-27T13:20:12.191Z"
   }
 ]
