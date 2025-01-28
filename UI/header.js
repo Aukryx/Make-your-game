@@ -1,11 +1,13 @@
 const score = document.getElementById("score");
 const highscore = document.getElementById("highscore");
 const timer = document.getElementById("time");
-const lives = document.getElementById("lives");
+const livesDisplay = document.getElementById("lives");
 
 let time = 0;
 let timerStarted = false;
 let interval;
+let currentLives = 3;
+livesDisplay.textContent = currentLives;
 
 // Fonction pour démarrer le chronomètre
 function startTimer() {
@@ -35,3 +37,4 @@ function stopTimer() {
 // document.addEventListener('DOMContentLoaded', () => {
 //     startTimer();
 // });
+

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheese Invaders - Menu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000;
+            font-family: Arial, sans-serif;
+        }
+
+        .menu-container {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(51, 51, 51, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+        }
+
+        .menu-button {
+            display: block;
+            width: 250px;
+            margin: 1rem auto;
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .menu-button::before {
+            content: '>';
+            position: absolute;
+            left: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-button.selected::before {
+            opacity: 1;
+        }
+
+        .menu-button:hover, .menu-button.selected {
+            transform: scale(1.05);
+        }
+
+        .menu-button.play {
+            background-color: #2ecc71;
+        }
+
+        .menu-button.play:hover, .menu-button.play.selected {
+            background-color: #27ae60;
+        }
+
+        .menu-button.highscore {
+            background-color: #f1c40f;
+        }
+
+        .menu-button.highscore:hover, .menu-button.highscore.selected {
+            background-color: #f39c12;
+        }
+
+        .menu-button.credits {
+            background-color: #e74c3c;
+        }
+
+        .menu-button.credits:hover, .menu-button.credits.selected {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <h1>Cheese Invaders</h1>
+        <button class="menu-button play" data-action="/game">PLAY</button>
+        <button class="menu-button highscore" data-action="/highscores">HIGHSCORES</button>
+        <button class="menu-button credits" data-action="https://github.com/Aukryx/Make-your-game">CREDITS</button>
+    </div>
+
+    <script>
+        const buttons = Array.from(document.querySelectorAll('.menu-button'));
+        let selectedIndex = 0;
+
+        function updateSelection() {
+            buttons.forEach(button => button.classList.remove('selected'));
+            buttons[selectedIndex].classList.add('selected');
+        }
+
+        function handleKeyPress(e) {
+            switch(e.key) {
+                case 'ArrowUp':
+                    e.preventDefault();
+                    selectedIndex = (selectedIndex - 1 + buttons.length) % buttons.length;
+                    updateSelection();
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    selectedIndex = (selectedIndex + 1) % buttons.length;
+                    updateSelection();
+                    break;
+                case 'Enter':
+                    e.preventDefault();
+                    const selectedButton = buttons[selectedIndex];
+                    const action = selectedButton.dataset.action;
+                    window.location.href = action;
+                    break;
+            }
+        }
+
+        // Initialiser la sélection
+        updateSelection();
+
+        // Ajouter les écouteurs d'événements
+        document.addEventListener('keydown', handleKeyPress);
+
+        // Gérer les clics de souris
+        buttons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                window.location.href = button.dataset.action;
+            });
+
+            button.addEventListener('mouseover', () => {
+                selectedIndex = index;
+                updateSelection();
+            });
+        });
+    </script>
+</body>
+</html>
