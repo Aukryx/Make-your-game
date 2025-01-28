@@ -10,6 +10,7 @@
     <script src="/players/player.js" defer></script>
     <script src="/UI/header.js" defer></script>
     <script src="/UI/pause.js" defer></script>
+    <script src="/UI/leaderbord.js" defer></script>
   </head>
   <body>
     <div id="game-container">
@@ -25,6 +26,22 @@
       <div id="line-of-protection"></div>
       <div id="spaceship">.........</div>
       <div id="pause-menu" style="display: none"></div>
+    </div>
+    <div id="leaderboard">
+      <table>
+        <caption>
+          LEADERBOARD
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Rank</th>
+            <th scope="col">Name</th>
+            <th scope="col">Score</th>
+            <th scope="col">Time</th>
+          </tr>
+        </thead>
+        <tbody id="body-leaderboard"></tbody>
+      </table>
     </div>
   </body>
 </html>
