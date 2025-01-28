@@ -19,6 +19,8 @@
   --BORDER-COLOR--: rgb(46, 255, 95);
   --ANIMATION-DURATION: 10s;
   --BORDER-SIZE--: 50px;
+  --LEADERBOARD-BUTTON-HOVER: #29b960;
+  --LEADERBOARD-BUTTON: #1fd72c;
 }
 
 body {
@@ -26,7 +28,8 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
   background-color: var(--BACKGROUND-COLOR);
   color: var(--TEXT-COLOR);
@@ -37,7 +40,6 @@ body {
   max-height: var(--GAME-MAX-SIZE);
   border: solid var(--TEXT-COLOR);
   position: relative;
-  margin: auto;
   border-radius: var(--BORDER-RADIUS);
   border-color: var(--BORDER-COLOR--);
   animation: colorChange var(--ANIMATION-DURATION) linear infinite;
@@ -185,6 +187,99 @@ header {
   background-color: var(--PAUSE-BUTTON-HOVER);
 }
 
+/*LEADERBOARD*/
+
+#leaderboard {
+  position: fixed;
+  right: -320px; /* Caché par défaut */
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background-color: var(--HEADER-BACKGROUND);
+  padding: 1rem;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+#leaderboard.visible {
+  right: 0;
+}
+
+/* Bouton pour afficher/masquer le leaderboard */
+#toggle-leaderboard {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  background-color: var(--LEADERBOARD-BUTTON);
+  color: var(--TEXT-COLOR);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s;
+  animation: pulse 2s infinite;
+}
+
+#toggle-leaderboard:hover {
+  background-color: var(--LEADERBOARD-BUTTON-HOVER);
+}
+
+/* Styles pour la table du leaderboard */
+#leaderboard table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#leaderboard caption {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--TEXT-COLOR);
+}
+
+#leaderboard th,
+#leaderboard td {
+  padding: 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#leaderboard th {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#leaderboard tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/*PAGINATION*/
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.pagination button {
+  background-color: var(--LEADERBOARD-BUTTON);
+  color: var(--TEXT-COLOR);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination button:hover {
+  background-color: var(--LEADERBOARD-BUTTON-HOVER);
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /*ANIMATIONS*/
 @keyframes colorChange {
   0% {
@@ -201,5 +296,32 @@ header {
   }
   100% {
     box-shadow: 0 0 var(--BORDER-SIZE--) rgba(252, 255, 46, 0.7);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/*MEDIA*/
+@media (max-width: 1200px) {
+  .game-wrapper {
+    flex-direction: column;
+  }
+
+  #game-container {
+    margin: 0 auto;
+  }
+
+  #leaderboard {
+    margin: 2rem auto;
   }
 }
