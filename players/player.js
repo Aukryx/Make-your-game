@@ -1,4 +1,5 @@
 // const onePlayer = document.getElementById('spaceship');
+const VERBOSE = 0;
 
 class Player {
   constructor(container) {
@@ -42,6 +43,7 @@ function gameLoop(timestamp) {
 requestAnimationFrame(gameLoop);
 
 window.addEventListener("keydown", (event) => {
+  if (VERBOSE >= 1) console.log(event);
   if (event.key === "ArrowRight" && event.key === "ArrowLeft") {
     direction = 0;
   } else if (event.key === "ArrowRight") {
