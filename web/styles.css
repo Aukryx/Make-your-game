@@ -151,3 +151,12 @@ header {
   .pause-button:hover {
     background-color: #2980b9;
   }
+
+
+
+  .bullet {
+    position: absolute;
+    width: 5px; 
+    height: 10px; 
+    background-color: red;
+  }
