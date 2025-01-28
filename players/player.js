@@ -102,7 +102,7 @@ window.addEventListener("keyup", (event) => {
 
 
 // voir throttle pour controle le tire fait 
-// voir limiter le tire sur la taille de la grille
+// voir limiter le tire sur la taille de la grille 
 // controler le tire au mouvement du vaisseau
-// mettre des commentaires
-// faire le tires aliens 
+// mettre des commentaires fait 
+// faire les tires aliens 
