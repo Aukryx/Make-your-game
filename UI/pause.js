@@ -1,21 +1,29 @@
 // pause.js
 let isPaused = false;
 const mainElements = ["grid", "line-of-protection", "spaceship"];
+let pauseOverlay;
+const pauseMenu = document.getElementById("pause-menu");
+
+//On document load
+document.addEventListener("DOMContentLoaded", function () {
+  initOverlay();
+});
 
 // Création de l'overlay
-const gameDiv = document.getElementById("game-container");
-const pauseOverlay = document.createElement("div");
-pauseOverlay.className = "pause-overlay";
-gameDiv.appendChild(pauseOverlay);
+function initOverlay() {
+  const gameDiv = document.getElementById("game-container");
+  pauseOverlay = document.createElement("div");
+  pauseOverlay.className = "pause-overlay";
+  gameDiv.appendChild(pauseOverlay);
 
-// Configuration du menu de pause
-const pauseMenu = document.getElementById("pause-menu");
-pauseMenu.innerHTML = `
+  // Configuration du menu de pause
+  pauseMenu.innerHTML = `
   <h2 style="color: white; margin-bottom: 2rem;">Jeu en Pause</h2>
   <button id="continue-btn" class="pause-button">Continuer</button>
   <button id="restart-btn" class="pause-button">Recommencer</button>
   <button id="return-menu-btn" class="pause-button">Retour au Menu</button>
 `;
+}
 
 function pauseGame() {
   if (!isPaused && !isGameOver) {

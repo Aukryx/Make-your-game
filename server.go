@@ -43,7 +43,7 @@ func GameHandler(w http.ResponseWriter, r *http.Request) {
 		tmpl, _ := template.ParseFiles("./web/menu.html")
 		tmpl.Execute(w, nil)
 	case "/game":
-		tmpl, _ := template.ParseFiles("./web/game.html")
+		tmpl, _ := template.ParseFiles("./web/index.html")
 		tmpl.Execute(w, nil)
 	case "/highscores":
 		tmpl, _ := template.ParseFiles("./web/highscores.html")
