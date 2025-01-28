@@ -60,8 +60,20 @@ class Bullet {
 
 }
 
+function throttle(func, limit) {
+  let lastFunc;
+  let lastRan = 0;
 
+  return function() {
+    const context = this;
+    const args = arguments;
 
+    if (Date.now() - lastRan >= limit) {
+      func.apply(context, args);
+      lastRan = Date.now();
+    }
+  };
+}
 
 const player = new Player(grid);
 
@@ -97,6 +109,10 @@ const updateDirection = () => {
   }
 };
 
+const throttledShoot = throttle(() => {
+  player.shoot(); 
+}, 500);
+
 window.addEventListener("keydown", (event) => {
   if (event.key in keys) {
     keys[event.key] = true;
@@ -104,7 +120,8 @@ window.addEventListener("keydown", (event) => {
   }
 
   if (event.key === " ") {
-    player.shoot()
+    // player.shoot()
+    throttledShoot()
   }
 });
 
@@ -116,4 +133,8 @@ window.addEventListener("keyup", (event) => {
 });
 
 
-
+// voir throttle pour controle le tire 
+// voir limiter le tire sur la taille de la grille
+// controler le tire au mouvement du vaisseau
+// mettre des commentaires
+// faire le tires aliens 
