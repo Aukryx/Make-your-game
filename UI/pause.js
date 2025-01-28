@@ -1,4 +1,4 @@
-// Variables globales pour le système de pause
+// pause.js
 let isPaused = false;
 const mainElements = ["grid", "line-of-protection", "spaceship"];
 
@@ -14,11 +14,11 @@ pauseMenu.innerHTML = `
   <h2 style="color: white; margin-bottom: 2rem;">Jeu en Pause</h2>
   <button id="continue-btn" class="pause-button">Continuer</button>
   <button id="restart-btn" class="pause-button">Recommencer</button>
+  <button id="return-menu-btn" class="pause-button">Retour au Menu</button>
 `;
 
-// Fonction pour mettre le jeu en pause
 function pauseGame() {
-  if (!isPaused) {
+  if (!isPaused && !isGameOver) {
     isPaused = true;
 
     // Arrêt du chronomètre
@@ -39,7 +39,6 @@ function pauseGame() {
   }
 }
 
-// Fonction pour reprendre le jeu
 function resumeGame() {
   if (isPaused) {
     isPaused = false;
@@ -62,7 +61,6 @@ function resumeGame() {
   }
 }
 
-// Fonction pour recommencer le jeu
 function restartGame() {
   // Réinitialiser le temps
   time = 0;
@@ -71,13 +69,12 @@ function restartGame() {
   // Réinitialiser le score
   score.textContent = "0";
 
-  // Réinitialiser les vies
-  lives.textContent = "3"; // ou votre nombre initial de vies
+  currentLives = 3;
+  livesDisplay.textContent = currentLives;
 
   // Réinitialiser les positions des éléments
-  // À adapter selon votre logique de jeu
   const grid = document.getElementById("grid");
-  if (grid) grid.innerHTML = ""; // Nettoyer la grille
+  if (grid) grid.innerHTML = "";
   createLine(30);
   createEnnemies(50);
 
@@ -87,6 +84,15 @@ function restartGame() {
   // Redémarrer le chronomètre
   stopTimer();
   startTimer();
+}
+
+function returnToMenu() {
+  // Arrêter les timers et le jeu
+  stopTimer();
+  isPaused = false;
+
+  // Rediriger vers la page du menu
+  window.location.href = "/";
 }
 
 // Gestionnaire d'événements pour la touche Échap
@@ -103,8 +109,6 @@ document.addEventListener("keydown", (event) => {
 // Événements des boutons
 document.getElementById("continue-btn").addEventListener("click", resumeGame);
 document.getElementById("restart-btn").addEventListener("click", restartGame);
-
-// Fonction à définir selon votre jeu
-function handleKeyPress(event) {
-  // Votre logique de contrôle du jeu ici
-}
+document
+  .getElementById("return-menu-btn")
+  .addEventListener("click", returnToMenu);

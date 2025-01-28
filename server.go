@@ -38,23 +38,28 @@ func LaunchServer(port string) {
 
 // Manage requests and responses for the game
 func GameHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" && r.URL.Path != "/api/scores" && r.URL.Path != "/api/scores/highest" {
-		http.NotFound(w, r)
-		return
-	}
-
-	switch {
-	case r.Method == "GET" && r.URL.Path == "/":
-		tmpl, _ := template.ParseFiles("./web/index.html")
+	switch r.URL.Path {
+	case "/":
+		tmpl, _ := template.ParseFiles("./web/menu.html")
 		tmpl.Execute(w, nil)
-	case r.Method == "GET" && r.URL.Path == "/api/scores":
-		getAllScores(w, r)
-	case r.Method == "POST" && r.URL.Path == "/api/scores":
-		pushNewScore(w, r)
-	case r.Method == "GET" && r.URL.Path == "/api/scores/highest":
-		getHighestScore(w, r)
+	case "/game":
+		tmpl, _ := template.ParseFiles("./web/game.html")
+		tmpl.Execute(w, nil)
+	case "/highscores":
+		tmpl, _ := template.ParseFiles("./web/highscores.html")
+		tmpl.Execute(w, nil)
+	case "/api/scores":
+		if r.Method == "GET" {
+			getAllScores(w, r)
+		} else if r.Method == "POST" {
+			pushNewScore(w, r)
+		}
+	case "/api/scores/highest":
+		if r.Method == "GET" {
+			getHighestScore(w, r)
+		}
 	default:
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		http.NotFound(w, r)
 	}
 }
 
