@@ -10,64 +10,73 @@ class Invader {
         this.element = document.createElement('div');
         this.element.className = 'ennemy'; 
         this.updatePosition(); 
-        document.getElementById(`line-${Math.floor(position_enemy.y / 30) + 1}`).appendChild(this.element); // Ajout à la ligne appropriée
+        document.getElementById(`line-${Math.floor(position_enemy.y / 30) + 1}`).appendChild(this.element); 
     }
 
-    // Méthode pour mettre à jour l'état de l'envahisseur
     update() {
+        // déplacement des enemies suivant la vitesse
         this.position_enemy.x += this.speedX;
 
-        // vérification si l'enemy touche les limites de la grid
-        if (this.position_enemy.x <= 0 || this.position_enemy.x + this.size.x >= window.innerWidth) {
+        // vérification si l'enemy touche les limites de la fenetre de jeu
+        if (this.position_enemy.x <= 0 || this.position_enemy.x + this.size.x >= 800) { 
             this.game.moveInvadersDown(); 
             this.speedX = -this.speedX; 
         }
         this.updatePosition();
     }
-
     updatePosition() {
         this.element.style.left = `${this.position_enemy.x}px`; 
         this.element.style.top = `${this.position_enemy.y}px`; 
     }
 }
 
-// Fonction pour créer des envahisseurs
+// fonction pour créer des invaders
 const createInvaders = (game) => {
     const invaders = [];
-    
+    const invaderWidth = 15; 
+    const invaderSpacing = 30; 
+    const gridWidth = 800; 
+
     for (let i = 0; i < 24; i++) {
-        const x = 30 + (i % 8) * 30;
-        const y = 30 + Math.floor(i / 8) * 30;
+        const x = invaderSpacing + (i % 8) * invaderSpacing;
+        const y = 30 + Math.floor(i / 8) * invaderSpacing;
+        // création d'un enemy
         invaders.push(new Invader(game, { x: x, y: y }));
     }
     return invaders; 
 };
 
-// Exemple d'utilisation
+// test d'utilisation
 const game = {
     invaders: [], 
     invadersBelow: function(invader) {
         return false; 
     },
-    addBody: function(bullet) {
-    },
+    // addBody: function(bullet) {
+    //     // Implémentez la logique pour ajouter un projectile au jeu
+    // },
     moveInvadersDown: function() {
         this.invaders.forEach(invader => {
             invader.position_enemy.y += 30; 
-            invader.updatePosition(); 
+            // vérification si l'enemy dépasse la limite de la grille
+            // VOIR POUR FAIRE UNE FUNCTION GAME OVER 
+            if (invader.position_enemy.y + invader.size.y > 600) { 
+                console.warn("Un envahisseur dépasse le bas de la grille !");
+            }
+            invader.updatePosition();
         });
     }
 };
 
-// Créer les envahisseurs
+// création des ennemies
 const invaders = createInvaders(game);
 game.invaders = invaders; 
 
 // Boucle de mise à jour
 function gameLoop() {
-    game.invaders.forEach(invader => invader.update());
+    game.invaders.forEach(invader => invader.update()); 
     requestAnimationFrame(gameLoop); 
 }
 
+
 gameLoop();
-export { Invader, createInvaders };
