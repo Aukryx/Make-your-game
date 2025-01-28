@@ -1,5 +1,6 @@
 
 class Player {
+  // constructor qui permet initialiser les propriétés de l'objet Player
   constructor(container) {
     this.element = document.getElementById("spaceship");
     this.x = 400;
@@ -9,21 +10,25 @@ class Player {
     this.init();
   }
 
+  // initialise la position du vaisseau
   init() {
     this.element.style.left = `${this.x}px`;
   }
 
+  // deplacements du vaisseau
   move(direction, deltaTime) {
     this.x += direction * this.speed * deltaTime * 500;
     this.x = Math.max(0, Math.min(760, this.x));
     this.element.style.left = `${this.x}px`;
   }
 
-  shoot(){
+  // Tire un projectile et ajout à la liste des projectiles
+  shoot() {
     const bullet = new Bullet(this.x + 7.5, this.element.offsetTop - 10);
     this.bullets.push(bullet);
   }
 
+  // Mise à jour la position des balles 
   updateBullets() {
     this.bullets.forEach((bullet, index) => {
       bullet.update();
@@ -35,7 +40,7 @@ class Player {
   }
 }
 
-
+// constructor qui permet initialiser les propriétés de l'objet Bullet
 class Bullet {
   constructor(x, y) {
     this.x = x;
@@ -47,24 +52,26 @@ class Bullet {
     this.updatePosition();
   }
 
+  // Mise à jour de la position du projectile en la déplaçant vers le haut
   update() {
     this.y -= this.speed;
     this.updatePosition()
   }
 
+  // Mise à jour de la position visuelle du projectile  
   updatePosition() {
     this.element.style.left = `${this.x}px`;
     this.element.style.top = `${this.y}px`;
   }
-  
+
 
 }
-
+// Fonction pour limiter la fréquence d'exécution pour les projectiles
 function throttle(func, limit) {
   let lastFunc;
   let lastRan = 0;
 
-  return function() {
+  return function () {
     const context = this;
     const args = arguments;
 
@@ -80,6 +87,7 @@ const player = new Player(grid);
 let lastTime = 0;
 let direction = 0;
 
+// Boucle de jeu principale qui met à jour la position du player et des projectiles
 function gameLoop(timestamp) {
   const deltaTime = (timestamp - lastTime) / 1000;
   lastTime = timestamp;
@@ -96,7 +104,7 @@ let keys = {
   Space: false
 };
 
-
+// Mise à jour de la direction du player en fonction des touches ArrowRight, ArrowLeft, Space
 const updateDirection = () => {
   if (keys.ArrowLeft && keys.ArrowRight) {
     direction = 0;
@@ -110,7 +118,7 @@ const updateDirection = () => {
 };
 
 const throttledShoot = throttle(() => {
-  player.shoot(); 
+  player.shoot();
 }, 500);
 
 window.addEventListener("keydown", (event) => {
@@ -133,7 +141,7 @@ window.addEventListener("keyup", (event) => {
 });
 
 
-// voir throttle pour controle le tire 
+// voir throttle pour controle le tire fait 
 // voir limiter le tire sur la taille de la grille
 // controler le tire au mouvement du vaisseau
 // mettre des commentaires
