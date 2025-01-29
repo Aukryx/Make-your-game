@@ -1,5 +1,6 @@
 // const onePlayer = document.getElementById('spaceship');
 const VERBOSE = 0;
+const game_container = document.getElementById("game-container");
 
 class Player {
   constructor(container) {
@@ -19,7 +20,7 @@ class Player {
 
   move(direction, deltaTime) {
     this.x += direction * this.speed * deltaTime * 500;
-    this.x = Math.max(0, Math.min(760, this.x));
+    this.x = Math.max(30, Math.min(game_container.clientWidth - 30, this.x));
     this.element.style.left = `${this.x}px`;
   }
 }
