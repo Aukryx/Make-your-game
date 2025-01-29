@@ -11,13 +11,12 @@
 - [ ] Test and optimize for 60 FPS performance
 
 ## UI Elements
-- [ ] Design and implement score display
-- [ ] Create countdown timer/game clock
-- [ ] Add lives counter
-- [ ] Design pause menu
-  - [ ] Continue option
-  - [ ] Restart option
-- [ ] Implement game over screen
+- [⌛] Design and implement score display
+- [X] Add lives counter
+- [X] Design pause menu
+  - [X] Continue option
+  - [x] Restart option
+- [X] Implement game over screen
 
 ## Map System
 - [ ] Create tileset image
@@ -43,9 +42,9 @@
   - [X] GET endpoint for retrieving scores
 - [X] Create score data structure
 - [ ] Implement score sorting system
-- [ ] Design scoreboard UI
-  - [ ] Display top 5 scores
-  - [ ] Add pagination
+- [X] Design scoreboard UI
+  - [X] Display top 5 scores
+  - [X] Add pagination
   - [ ] Show player percentile
 - [ ] Add player name input system
 
