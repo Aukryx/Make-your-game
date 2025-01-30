@@ -7,6 +7,8 @@
 // FAIRE LA LIGNE DE PROTECTION
 // DEFINIR LE GAME OVER LORSQU'UN INVADER ATTEINT LA LIGNE FINALE
 
+// import { shootEnemy } from './shootEnemy'
+
 let direction = 1;
 let invaders = [];
 let gameWidth = document.getElementById("game-container").clientWidth;
@@ -86,103 +88,3 @@ export function setupGame() {
   }
 }
 
-/*
-class InvaderGroup {
-  constructor(game) {
-    this.game = game;
-    this.invaders = this.createInvaders();
-    this.groupPosition = { x: 0, y: 30 }; // Position du groupe
-    this.direction = 1; // 1 pour droite, -1 pour gauche
-    this.speed = 0.5; // Vitesse de déplacement
-    this.moveDownDistance = 30; // Distance de descente
-  }
-
-  createInvaders() {
-    const invaders = [];
-    const invaderSpacing = 30;
-
-    for (let i = 0; i < 4; i++) {
-      const x = invaderSpacing + (i % 8) * invaderSpacing;
-      const y = 30 + Math.floor(i / 8) * invaderSpacing;
-      // Création d'un enemy
-      invaders.push(new Invader(this.game, { x: x, y: y }));
-    }
-    return invaders;
-  }
-
-  update() {
-    // Vérifier les limites avant de bouger
-    this.checkBounds();
-
-    // Déplacer le groupe
-    this.groupPosition.x += this.direction * this.speed;
-
-    // Mettre à jour la position de chaque invader
-    this.invaders.forEach((invader) => {
-      invader.position_enemy.x = this.groupPosition.x + invader.initialX;
-      invader.position_enemy.y = this.groupPosition.y + invader.initialY;
-      invader.updatePosition();
-    });
-  }
-
-  move(dx, dy) {
-    this.groupPosition.x += dx;
-    this.groupPosition.y += dy;
-
-    this.invaders.forEach((invader) => {
-      invader.position_enemy.x += dx;
-      invader.position_enemy.y += dy;
-      invader.updatePosition();
-    });
-  }
-
-  moveInvadersDown() {
-    const downStep = 30; // Distance à descendre
-    this.move(0, downStep); // Déplace le groupe vers le bas
-  }
-
-  checkBounds() {
-    const gameWidth = document.getElementById("game-container").clientWidth;
-    const leftMost = this.groupPosition.x;
-    const rightMost = this.groupPosition.x + 7 * 30; // 8 colonnes * 30px d'espacement
-
-    if (leftMost <= 0 || rightMost >= gameWidth) {
-      this.direction *= -1; // Inverser la direction
-      this.moveDown(); // Descendre
-    }
-  }
-
-  moveDown() {
-    this.groupPosition.y += this.moveDownDistance;
-  }
-}
-
-// Fonction pour créer le jeu
-const game = {
-  invaders: [],
-  invadersBelow: function (invader) {
-    // Logique pour vérifier s'il y a des envahisseurs en dessous
-    return false;
-  },
-  moveInvadersDown: function () {
-    this.invaders.forEach((invader) => {
-      // Cette méthode n'est plus utilisée car le mouvement est géré par InvaderGroup
-    });
-  },
-};
-
-// Création du groupe d'ennemis
-const invaderGroup = new InvaderGroup(game);
-game.invaders = invaderGroup.invaders;
-
-// Boucle de mise à jour
-function gameLoop() {
-  invaderGroup.update();
-  invaderGroup.checkBounds(); // Vérifie les limites du groupe
-  requestAnimationFrame(gameLoop);
-}
-
-// Appel de la boucle de jeu
-gameLoop();
-
-*/
