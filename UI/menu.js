@@ -161,7 +161,7 @@ function restartGame() {
     const grid = document.getElementById("grid");
     if (grid) grid.innerHTML = "";
     createLine(30);
-    createEnnemies(50);
+    // createEnnemies(50);
     
     // Reset game state
     isGameOver = false;
