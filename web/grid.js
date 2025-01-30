@@ -13,28 +13,28 @@ const createLine = (lineCount) => {
 }
 createLine(30);
 
-const createEnnemies = (ennemiesCount) => {
-    let line = 1;
-    for (let i = 1; i <= ennemiesCount; i++) {
-        const ennemy = document.createElement("div");
-        ennemy.setAttribute("class", "ennemy");
-        ennemy.id = `ennemy-${i}`;
+// const createEnnemies = (ennemiesCount) => {
+//     let line = 1;
+//     for (let i = 1; i <= ennemiesCount; i++) {
+//         const ennemy = document.createElement("div");
+//         ennemy.setAttribute("class", "ennemy");
+//         ennemy.id = `ennemy-${i}`;
         
-        const currentLine = document.getElementById(`line-${line}`);
+//         const currentLine = document.getElementById(`line-${line}`);
         
-        if (currentLine) {
-            currentLine.appendChild(ennemy);
-        } else {
-            console.error(`La ligne ${line} n'existe pas`);
-        }
+//         if (currentLine) {
+//             currentLine.appendChild(ennemy);
+//         } else {
+//             console.error(`La ligne ${line} n'existe pas`);
+//         }
         
-        if (i % 10 === 0) {
-            line++;
-        }
-    }
-}
+//         if (i % 10 === 0) {
+//             line++;
+//         }
+//     }
+// }
 
-createEnnemies(50);
+// createEnnemies(50);
 
 const createProtectionBlocks = () => {
     const lineOfProtection = document.getElementById('line-of-protection');

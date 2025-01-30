@@ -26,6 +26,8 @@ func LaunchServer(port string) {
 	http.Handle("/web/", http.StripPrefix("/web/", fs))
 	fs = http.FileServer(http.Dir("./players/"))
 	http.Handle("/players/", http.StripPrefix("/players/", fs))
+	fs = http.FileServer(http.Dir("./enemies"))
+	http.Handle("/enemies/", http.StripPrefix("/enemies/", fs))
 	fs = http.FileServer(http.Dir("./UI/"))
 	http.Handle("/UI/", http.StripPrefix("/UI/", fs))
 	http.HandleFunc("/", GameHandler)
