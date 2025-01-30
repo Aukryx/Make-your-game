@@ -2,6 +2,7 @@ const leaderBoardList = document.getElementById("body-leaderboard");
 const itemsPerPage = 5;
 let ranks;
 let currentPage = 1;
+let VERBOSE = 1
 
 //Document loading
 window.addEventListener("DOMContentLoaded", init);

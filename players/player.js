@@ -1,5 +1,6 @@
 import { Bullet , throttle } from "./shoot.js";
 
+const game_container = document.getElementById("game-container")
 
 class Player {
   // constructor qui permet initialiser les propriétés de l'objet Player
