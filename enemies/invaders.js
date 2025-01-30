@@ -14,16 +14,18 @@ let invaders = [];
 let gameWidth = document.getElementById("game-container").clientWidth;
 
 class Invader {
-  constructor(x, y) {
+  constructor(x, y, id) {
     this.width = 30;
     this.height = 20;
     this.x = x;
     this.y = y;
+    this.id = id
     this.element = this.createElement();
   }
 
   createElement() {
     const element = document.createElement("div");
+    element.id = `invader-${this.id}`
     element.className = "invader";
     element.style.position = "absolute";
     element.style.width = `${this.width}px`;
@@ -78,10 +80,13 @@ export function setupGame() {
   const rows = 5;
   const cols = 10;
   const spacing = 40;
+  let invaderId = 1
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
-      const invader = new Invader(col * spacing + 50, row * spacing + 30);
+      const invader = new Invader(col * spacing + 50, row * spacing + 30, invaderId);
+      invader.id = invaderId
+      invaderId ++
       invaders.push(invader);
       game_container.appendChild(invader.element);
     }
