@@ -8,6 +8,7 @@ class Bullet {
       this.element.className = 'bullet';
       container.appendChild(this.element);
       this.updatePosition();
+
     }
   
     // Mise à jour de la position du projectile en la déplaçant vers le haut

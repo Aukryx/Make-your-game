@@ -31,6 +31,7 @@ class Player {
     const gameContainerRect = this.container.getBoundingClientRect();
 
     const bulletY = rect.top - gameContainerRect.top - 10; 
+    
     // const bullet = new Bullet(this.x + 7.5, bulletY, this.container);
     const bullet = new Bullet(this.x, bulletY, this.container);
     this.bullets.push(bullet);
@@ -39,7 +40,7 @@ class Player {
 updateBullets() {
     this.bullets.forEach((bullet, index) => {
         bullet.update();
-        if (bullet.y < 0) { // Vérifiez si la balle sort de l'écran
+        if (bullet.y < 0) { 
             bullet.element.remove();
             this.bullets.splice(index, 1);
         }

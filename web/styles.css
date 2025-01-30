@@ -405,9 +405,4 @@ header {
     background-color: red;
   }
   
-  #game-container {
-    position: relative;
-    width: 800px; /* ou la largeur de votre jeu */
-    height: 600px; /* ou la hauteur de votre jeu */
-    overflow: hidden; /* pour cacher les éléments qui sortent du conteneur */
-}
+
