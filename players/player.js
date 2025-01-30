@@ -1,3 +1,8 @@
+
+//TO DO : Quand je met la pause, la position des balles change, ma théorie est que la balle qui n'est pas dans le menu pause a comme position 0 en vertical
+//le bord de l'écran alors que dans le menu pause, la position 0 est le bas du header.
+//Dans la console, la position Y de la balle ne bouge pas quand je met pause. 
+
 import { Bullet, throttle } from "./shoot.js";
 
 const game_container = document.getElementById("game-container");
