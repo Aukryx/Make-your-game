@@ -1,12 +1,12 @@
 // constructor qui permet initialiser les propriétés de l'objet Bullet
 class Bullet {
-    constructor(x, y) {
+    constructor(x, y, container) {
       this.x = x;
       this.y = y;
       this.speed = 1;
       this.element = document.createElement('div');
       this.element.className = 'bullet';
-      document.body.appendChild(this.element);
+      container.appendChild(this.element);
       this.updatePosition();
     }
   
@@ -20,6 +20,7 @@ class Bullet {
     updatePosition() {
       this.element.style.left = `${this.x}px`;
       this.element.style.top = `${this.y}px`;
+      this.element.style.transform = 'translateX(-50%)'; 
     }
   
   

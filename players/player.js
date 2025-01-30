@@ -27,20 +27,25 @@ class Player {
 
   // Tire un projectile et ajout à la liste des projectiles
   shoot() {
-    const bullet = new Bullet(this.x + 7.5, this.element.offsetTop - 10);
-    this.bullets.push(bullet);
-  }
+    const rect = this.element.getBoundingClientRect();
+    const gameContainerRect = this.container.getBoundingClientRect();
 
-  // Mise à jour la position des balles 
-  updateBullets() {
+    const bulletY = rect.top - gameContainerRect.top - 10; 
+    // const bullet = new Bullet(this.x + 7.5, bulletY, this.container);
+    const bullet = new Bullet(this.x, bulletY, this.container);
+    this.bullets.push(bullet);
+}
+
+updateBullets() {
     this.bullets.forEach((bullet, index) => {
-      bullet.update();
-      if (bullet.y < 0 || bullet.y > this.gridHeight) {
-        bullet.element.remove();
-        this.bullets.splice(index, 1);
-      }
+        bullet.update();
+        if (bullet.y < 0) { // Vérifiez si la balle sort de l'écran
+            bullet.element.remove();
+            this.bullets.splice(index, 1);
+        }
     });
-  }
+}
+
 }
 
 const player = new Player(grid);
