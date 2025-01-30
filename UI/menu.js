@@ -1,3 +1,6 @@
+// TO DO stop bullets game over and paused from enemies
+
+
 // DOM Elements
 const score = document.getElementById("score");
 const highscore = document.getElementById("highscore");

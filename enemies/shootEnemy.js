@@ -1,4 +1,3 @@
-
 class Bullet {
     constructor(x, y) {
       this.x = x;
@@ -17,6 +16,7 @@ class Bullet {
       return element;
     }
   
+    
     updatePosition(element = this.element) {
       element.style.left = `${this.x}px`;
       element.style.top = `${this.y}px`;
@@ -40,5 +40,5 @@ class Bullet {
     const bullet = new Bullet(invader.x + invader.width / 2, invader.y + invader.height);
     bullet.launch();
   }
-  
-  export {shootEnemy}
+
+  export { Bullet, shootEnemy };
