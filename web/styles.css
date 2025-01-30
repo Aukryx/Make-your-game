@@ -10,7 +10,7 @@
   --PAUSE-BUTTON-BACKGROUND: #3498db;
   --PAUSE-BUTTON-HOVER: #2980b9;
   --BORDER-RADIUS: 10px;
-  --GAME-MAX-SIZE: 900px;
+  --GAME-MAX-SIZE: 600px;
   --ENEMY-SIZE: 30px;
   --PROTECTION-WIDTH: 60px;
   --PROTECTION-HEIGHT: 60px;
@@ -38,6 +38,8 @@ body {
 #game-container {
   max-width: var(--GAME-MAX-SIZE);
   max-height: var(--GAME-MAX-SIZE);
+  width: 100%;
+  height: var(--GAME-MAX-SIZE);
   border: solid var(--TEXT-COLOR);
   position: relative;
   border-radius: var(--BORDER-RADIUS);

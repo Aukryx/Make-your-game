@@ -45,7 +45,7 @@ export function moveInvaders() {
   const margin = 20;
 
   invaders.forEach((invader) => {
-    invader.x += 2 * direction;
+    invader.x += direction;
 
     if (
       invader.x <= margin ||
@@ -57,8 +57,13 @@ export function moveInvaders() {
 
   if (touchedEdge) {
     direction *= -1;
+    const game = document.getElementById("game-container");
     invaders.forEach((invader) => {
-      invader.y += 10;
+      invader.y += 15;
+      //Collision avec la bordure du bas
+      if (invader.y > game.offsetHeight - invader.height) {
+        invader.remove();
+      }
     });
   }
 
