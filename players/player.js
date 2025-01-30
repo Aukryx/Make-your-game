@@ -1,9 +1,13 @@
-import { Bullet , throttle } from "./shoot.js";
 
-const game_container = document.getElementById("game-container")
+//TO DO : Quand je met la pause, la position des balles change, ma théorie est que la balle qui n'est pas dans le menu pause a comme position 0 en vertical
+//le bord de l'écran alors que dans le menu pause, la position 0 est le bas du header.
+//Dans la console, la position Y de la balle ne bouge pas quand je met pause. 
+
+import { Bullet, throttle } from "./shoot.js";
+
+const game_container = document.getElementById("game-container");
 
 class Player {
-  // constructor qui permet initialiser les propriétés de l'objet Player
   constructor(container) {
     this.element = document.getElementById("spaceship");
     this.x = 400;
@@ -13,29 +17,36 @@ class Player {
     this.init();
   }
 
-  // initialise la position du vaisseau
   init() {
     this.element.style.left = `${this.x}px`;
   }
 
-  // deplacements du vaisseau
   move(direction, deltaTime) {
+    if (isPaused || isGameOver) return;
+    
     this.x += direction * this.speed * deltaTime * 500;
     this.x = Math.max(30, Math.min(game_container.clientWidth - 30, this.x));
     this.element.style.left = `${this.x}px`;
   }
 
-  // Tire un projectile et ajout à la liste des projectiles
   shoot() {
-    const bullet = new Bullet(this.x + 7.5, this.element.offsetTop - 10);
+    if (isPaused || isGameOver) return;
+    
+    // Calculer la position relative au game-container
+    const gameContainerRect = game_container.getBoundingClientRect();
+    const spaceshipRect = this.element.getBoundingClientRect();
+    const bulletY = spaceshipRect.top - gameContainerRect.top - 10; // Position relative au game-container
+    
+    const bullet = new Bullet(this.x, bulletY, this.container);
     this.bullets.push(bullet);
   }
 
-  // Mise à jour la position des balles 
   updateBullets() {
+    if (isPaused || isGameOver) return;
+    
     this.bullets.forEach((bullet, index) => {
       bullet.update();
-      if (bullet.y < 0 || bullet.y > this.gridHeight) {
+      if (bullet.y < 0) {
         bullet.element.remove();
         this.bullets.splice(index, 1);
       }
@@ -48,12 +59,11 @@ const player = new Player(grid);
 let lastTime = 0;
 let direction = 0;
 
-// Boucle de jeu principale qui met à jour la position du player et des projectiles
 function gameLoop(timestamp) {
   const deltaTime = (timestamp - lastTime) / 1000;
   lastTime = timestamp;
-  player.move(direction, deltaTime)
-  player.updateBullets()
+  player.move(direction, deltaTime);
+  player.updateBullets();
   requestAnimationFrame(gameLoop);
 }
 
@@ -65,8 +75,12 @@ let keys = {
   Space: false
 };
 
-// Mise à jour de la direction du player en fonction des touches ArrowRight, ArrowLeft, Space
 const updateDirection = () => {
+  if (isPaused || isGameOver) {
+    direction = 0;
+    return;
+  }
+  
   if (keys.ArrowLeft && keys.ArrowRight) {
     direction = 0;
   } else if (keys.ArrowRight) {
@@ -83,14 +97,15 @@ const throttledShoot = throttle(() => {
 }, 500);
 
 window.addEventListener("keydown", (event) => {
+  if (isPaused || isGameOver) return;
+  
   if (event.key in keys) {
     keys[event.key] = true;
     updateDirection();
   }
 
   if (event.key === " ") {
-    // player.shoot()
-    throttledShoot()
+    throttledShoot();
   }
 });
 
@@ -100,10 +115,3 @@ window.addEventListener("keyup", (event) => {
     updateDirection();
   }
 });
-
-
-// voir throttle pour controle le tire fait 
-// voir limiter le tire sur la taille de la grille 
-// controler le tire au mouvement du vaisseau
-// mettre des commentaires fait 
-// faire les tires aliens 
