@@ -10,7 +10,7 @@
   --PAUSE-BUTTON-BACKGROUND: #3498db;
   --PAUSE-BUTTON-HOVER: #2980b9;
   --BORDER-RADIUS: 10px;
-  --GAME-MAX-SIZE: 900px;
+  --GAME-MAX-SIZE: 600px;
   --ENEMY-SIZE: 30px;
   --PROTECTION-WIDTH: 60px;
   --PROTECTION-HEIGHT: 60px;
@@ -38,6 +38,8 @@ body {
 #game-container {
   max-width: var(--GAME-MAX-SIZE);
   max-height: var(--GAME-MAX-SIZE);
+  width: 100%;
+  height: var(--GAME-MAX-SIZE);
   border: solid var(--TEXT-COLOR);
   position: relative;
   border-radius: var(--BORDER-RADIUS);
@@ -80,7 +82,7 @@ header {
   width: 100%;
 }
 
-.ennemy {
+.invader {
   width: var(--ENEMY-SIZE);
   height: var(--ENEMY-SIZE);
   background-color: var(--ENEMY-COLOR);
@@ -90,22 +92,22 @@ header {
   overflow: hidden;
 }
 
-.ennemy::before,
-.ennemy::after {
+.invader::before,
+.invader::after {
   content: "";
   position: absolute;
   background-color: var(--ENEMY-EYE-COLOR);
   border-radius: 50%;
 }
 
-.ennemy::before {
+.invader::before {
   width: 8px;
   height: 8px;
   top: 5px;
   left: 5px;
 }
 
-.ennemy::after {
+.invader::after {
   width: 8px;
   height: 8px;
   top: 5px;
@@ -353,56 +355,53 @@ header {
   text-align: center;
   min-width: 300px;
 }
-  
-  .pause-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 998;
-    display: none;
-  }
-  
-  #pause-menu {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #2c3e50;
-    padding: 2rem;
-    border-radius: 10px;
-    z-index: 999;
-    text-align: center;
-    min-width: 300px;
-  }
-  
-  .pause-button {
-    display: block;
-    width: 200px;
-    margin: 1rem auto;
-    padding: 1rem;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #3498db;
-    color: white;
-    transition: background-color 0.3s;
-  }
-  
-  .pause-button:hover {
-    background-color: #2980b9;
-  }
 
+.pause-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  display: none;
+}
+
+#pause-menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #2c3e50;
+  padding: 2rem;
+  border-radius: 10px;
+  z-index: 999;
+  text-align: center;
+  min-width: 300px;
+}
+
+.pause-button {
+  display: block;
+  width: 200px;
+  margin: 1rem auto;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.pause-button:hover {
+  background-color: #2980b9;
+}
 
 /* projectiles */
-  .bullet {
-    position: absolute;
-    width: 5px; 
-    height: 10px; 
-    background-color: red;
-  }
-  
-
+.bullet {
+  position: absolute;
+  width: 5px;
+  height: 10px;
+  background-color: red;
+}
