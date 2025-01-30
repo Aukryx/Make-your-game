@@ -6,7 +6,7 @@ function gameInit() {
 }
 
 function gameLoop() {
-  if (!isGameOver || isPaused) {
+  if (!isGameOver && !isPaused) {
     moveInvaders();
   }
 
