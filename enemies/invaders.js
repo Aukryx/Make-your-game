@@ -1,3 +1,4 @@
+
 // VOIR POUR DEPLACMENT DES INVADERS VERS LE BAS
 // LES INVADERS DESCENDENT INDIVIDUELLEMENT ET NON PAR GROUPE (LIGNE)
 // VOIR POUR DEFINIR LA LIMITE DE LA FENETRE DE JEU (DROITE ET GAUCHE)
@@ -7,7 +8,8 @@
 // FAIRE LA LIGNE DE PROTECTION
 // DEFINIR LE GAME OVER LORSQU'UN INVADER ATTEINT LA LIGNE FINALE
 
-// import { shootEnemy } from './shootEnemy'
+import { Bullet, shootEnemy } from "../enemies/shootEnemy.js";
+
 
 let direction = 1;
 let invaders = [];
@@ -22,7 +24,7 @@ class Invader {
     this.id = id
     this.element = this.createElement();
   }
-
+  
   createElement() {
     const element = document.createElement("div");
     element.id = `invader-${this.id}`
@@ -33,12 +35,12 @@ class Invader {
     this.updatePosition(element);
     return element;
   }
-
+  
   updatePosition(element = this.element) {
     element.style.left = `${this.x}px`;
     element.style.top = `${this.y}px`;
   }
-
+  
   remove() {
     this.element.remove();
   }
@@ -47,10 +49,10 @@ class Invader {
 export function moveInvaders() {
   let touchedEdge = false;
   const margin = 20;
-
+  
   invaders.forEach((invader) => {
     invader.x += direction;
-
+    
     if (
       invader.x <= margin ||
       invader.x >= gameWidth - invader.width - margin
@@ -58,7 +60,7 @@ export function moveInvaders() {
       touchedEdge = true;
     }
   });
-
+  
   if (touchedEdge) {
     direction *= -1;
     const game = document.getElementById("game-container");
@@ -70,7 +72,7 @@ export function moveInvaders() {
       }
     });
   }
-
+  
   invaders.forEach((invader) => invader.updatePosition());
 }
 
@@ -81,7 +83,7 @@ export function setupGame() {
   const cols = 10;
   const spacing = 40;
   let invaderId = 1
-
+  
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const invader = new Invader(col * spacing + 50, row * spacing + 30, invaderId);
@@ -91,5 +93,14 @@ export function setupGame() {
       game_container.appendChild(invader.element);
     }
   }
-}
+
+
+    // Appel à shootEnemy pour chaque invader à intervalles réguliers
+    setInterval(() => {
+      const randomInvader = invaders[Math.floor(Math.random() * invaders.length)];
+      if (randomInvader) {
+        shootEnemy(randomInvader);
+      }
+    }, 3000); // Les envahisseurs tirent toutes les secondes
+  }
 
