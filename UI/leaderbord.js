@@ -9,6 +9,12 @@ window.addEventListener("DOMContentLoaded", init);
 
 async function init() {
   ranks = await getRanks();
+  // Mettre à jour l'affichage du highscore si on a des données
+  if (ranks && ranks.length > 0) {
+    const topScore = ranks[0].Score;
+    const highscore = document.getElementById("highscore");
+      highscore.textContent = topScore;
+  }
   addToggleButton();
   createPaginationControls();
   displayRanks(ranks);
@@ -116,4 +122,26 @@ function displayRanks(ranks) {
     tr.appendChild(tdTime);
     leaderBoardList.appendChild(tr);
   }
+}
+
+async function getRanks() {
+  const data = await getData("/api/scores");
+  
+  // Sort the data first by score (descending), then by time for equal scores
+  return data.sort((a, b) => {
+    // First compare scores (in descending order)
+    if (b.Score !== a.Score) {
+      return b.Score - a.Score;
+    }
+    
+    // If scores are equal, compare times
+    // Convert time strings to Date objects for comparison
+    const timeA = new Date(`1970-01-01T${a.Time}`);
+    const timeB = new Date(`1970-01-01T${b.Time}`);
+    
+    return timeA - timeB;  // Earlier times come first
+  }).map((rank, index) => ({
+    ...rank,
+    Rank: index + 1  // Update ranks based on new sorting
+  }));
 }

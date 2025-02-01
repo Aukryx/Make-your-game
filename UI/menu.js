@@ -15,6 +15,7 @@ const gameOverOverlay = document.createElement("div");
 let time = 0;
 let timerStarted = false;
 let interval;
+let currentScore = 0
 let currentLives = 3;
 let pauseOverlay;
 let isGameOver = false;
@@ -88,6 +89,8 @@ function handleKeyPress(event) {
                 loseLife();
             }
             break;
+        case ' ':
+            addingScore()
     }
 }
 
@@ -154,6 +157,7 @@ function restartGame() {
     timer.textContent = "00:00:00";
     
     // Reset score
+    currentScore = 0
     score.textContent = "0";
     
     // Reset lives
@@ -217,3 +221,15 @@ document.addEventListener("DOMContentLoaded", function () {
     if (gameoverReturnMenuBtn) gameoverReturnMenuBtn.addEventListener('click', returnToMenu);
     
 });
+
+function addingScore() {
+    console.log(currentScore);
+    currentScore += 50000;
+    score.textContent = currentScore;
+    
+    const currentHighScore = parseInt(highscore.textContent);
+    
+    if (currentScore > currentHighScore) {
+        highscore.textContent = currentScore;
+    }
+}
