@@ -3,6 +3,7 @@
 //le bord de l'écran alors que dans le menu pause, la position 0 est le bas du header.
 //Dans la console, la position Y de la balle ne bouge pas quand je met pause. 
 
+import { invaders } from "../enemies/invaders.js";
 import { Bullet, throttle } from "./shoot.js";
 
 const game_container = document.getElementById("game-container");
@@ -63,6 +64,7 @@ function gameLoop(timestamp) {
   lastTime = timestamp;
   player.move(direction, deltaTime);
   player.updateBullets();
+  checkCollision(player, invaders)
   requestAnimationFrame(gameLoop);
 }
 
@@ -115,14 +117,44 @@ window.addEventListener("keyup", (event) => {
   }
 });
 
-function checkCollision(bullet, invaders){
-  return (
-    bullet.x < invaders.x + invaders.width &&
-    bullet.x + bullet.width > invaders.x &&
-    bullet.y < invaders.y + invaders.height &&
-    bullet.y + bullet.height > invaders.y
-  )
+function checkCollision(player, invaders){
+  // Collisions Bullets/Invaders
+  player.bullets.forEach((bullet, bulletIndex) => {
+    console.log(bullet)
+    console.log(invaders)
+    invaders.forEach((invader, invaderIndex) => {
+      if (
+        bullet.x < invader.x + invader.width &&
+        bullet.x + bullet.width > invader.x &&
+        bullet.y < invader.y + invader.height &&
+        bullet.y + bullet.height > invader.y
+      ) {
+        // Collision détectée
+        bullet.element.remove();
+        player.bullets.splice(bulletIndex, 1);
+        
+        invader.element.remove();
+        invaders.splice(invaderIndex, 1);
+        
+        // ajouter ici la logique score
+      }
+    });
+  });
+  invaders.forEach((invader) => {
+    if (
+      invader.x < player.x + player.element.clientWidth &&
+      invader.x + invader.width > player.x &&
+      invader.y + invader.height > player.element.offsetTop
+    ) {
+      // Game Over si un invader touche le joueur
+      endGame();
+    }
+  });
+}
 
+function endGame() {
+  isGameOver = true;
+  // Ajouter votre logique de fin de jeu
 }
 
 export { checkCollision }
