@@ -32,10 +32,9 @@ class Player {
   shoot() {
     if (isPaused || isGameOver) return;
     
-    // Calculer la position relative au game-container
-    const gameContainerRect = game_container.getBoundingClientRect();
+    const gameContainerRect = this.container.getBoundingClientRect();
     const spaceshipRect = this.element.getBoundingClientRect();
-    const bulletY = spaceshipRect.top - gameContainerRect.top - 10; // Position relative au game-container
+    const bulletY = spaceshipRect.top - gameContainerRect.top;
     
     const bullet = new Bullet(this.x, bulletY, this.container);
     this.bullets.push(bullet);
