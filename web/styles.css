@@ -42,12 +42,15 @@ body {
   height: var(--GAME-MAX-SIZE);
   border: solid var(--TEXT-COLOR);
   position: relative;
+  overflow: hidden;
   border-radius: var(--BORDER-RADIUS);
   border-color: var(--BORDER-COLOR--);
   animation: colorChange var(--ANIMATION-DURATION) linear infinite;
 }
 
 header {
+  z-index: 10;
+  position: relative;
   background-color: var(--HEADER-BACKGROUND);
   padding: 10px;
   border-radius: var(--BORDER-RADIUS) var(--BORDER-RADIUS) 0 0;
