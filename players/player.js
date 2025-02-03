@@ -115,3 +115,15 @@ window.addEventListener("keyup", (event) => {
     updateDirection();
   }
 });
+
+function checkCollision(bullet, invaders){
+  return (
+    bullet.x < invaders.x + invaders.width &&
+    bullet.x + bullet.width > invaders.x &&
+    bullet.y < invaders.y + invaders.height &&
+    bullet.y + bullet.height > invaders.y
+  )
+
+}
+
+export { checkCollision }
