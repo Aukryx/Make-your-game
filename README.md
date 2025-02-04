@@ -2,16 +2,16 @@
 
 ## Core Game Engine Development
 - [X] Set up basic HTML/DOM structure
-- [⌛] Implement requestAnimationFrame game loop
+- [X] Implement requestAnimationFrame game loop
 - [ ] Create performance monitoring system
-- [⌛] Implement smooth keyboard controls
-- [ ] Set up collision detection system
-- [ ] Create game state management system
-- [ ] Implement pause functionality
+- [X] Implement smooth keyboard controls
+- [⌛] Set up collision detection system
+- [X] Create game state management system
+- [X] Implement pause functionality
 - [ ] Test and optimize for 60 FPS performance
 
 ## UI Elements
-- [⌛] Design and implement score display
+- [X] Design and implement score display
 - [X] Add lives counter
 - [X] Design pause menu
   - [X] Continue option
