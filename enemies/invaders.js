@@ -27,8 +27,21 @@ class Invader {
   
   createElement() {
     const element = document.createElement("div");
+    const STPng = document.createElement("img")
+    const tiePng = document.createElement("img")
+    const tieDVPng = document.createElement("img")
+    STPng.src = "/web/assets/stormtrooper.png"
+    STPng.alt = "stormtrooper"
+    tiePng.src = "/web/assets/tie.png"
+    tiePng.alt = "tie"
+    tieDVPng.src = "/web/assets/tieDV.png"
+    tieDVPng.alt = "tieDV"
+
+    element.appendChild(tiePng)
+    
     element.id = `invader-${this.id}`
-    element.className = "invader";
+    //modifier l'image que l'on veut ici
+    element.className = "invader tie";
     element.style.position = "absolute";
     element.style.width = `${this.width}px`;
     element.style.height = `${this.height}px`;
