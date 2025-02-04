@@ -3,8 +3,8 @@
 //le bord de l'écran alors que dans le menu pause, la position 0 est le bas du header.
 //Dans la console, la position Y de la balle ne bouge pas quand je met pause. 
 
-import { invaders } from "../enemies/invaders.js";
 import { Bullet, throttle } from "./shoot.js";
+import { invaders, moveInvaders, setupGame } from "../enemies/invaders.js";
 
 const game_container = document.getElementById("game-container");
 
@@ -15,6 +15,7 @@ class Player {
     this.speed = 0.5;
     this.container = container;
     this.bullets = [];
+    // this.invaders = invaders
     this.init();
   }
 
@@ -24,35 +25,55 @@ class Player {
 
   move(direction, deltaTime) {
     if (isPaused || isGameOver) return;
-    
+
     this.x += direction * this.speed * deltaTime * 500;
     this.x = Math.max(30, Math.min(game_container.clientWidth - 30, this.x));
     this.element.style.left = `${this.x}px`;
   }
 
   shoot() {
-    if (isPaused || isGameOver) return;
-    
-    const gameContainerRect = this.container.getBoundingClientRect();
-    const spaceshipRect = this.element.getBoundingClientRect();
-    const bulletY = spaceshipRect.top - gameContainerRect.top;
-    
-    const bullet = new Bullet(this.x, bulletY, this.container);
+    if (isPaused || isGameOver) return; // Vérifiez si le jeu est en pause ou terminé
+
+    const bullet = new Bullet(this.x, this.element.offsetTop, this.container);
     this.bullets.push(bullet);
   }
 
   updateBullets() {
     if (isPaused || isGameOver) return;
-    
-    this.bullets.forEach((bullet, index) => {
+
+    this.bullets.forEach((bullet, bulletIndex) => {
       bullet.update();
+
+      // Vérifier si le projectile sort de l'écran
       if (bullet.y < 0) {
         bullet.element.remove();
-        this.bullets.splice(index, 1);
+        this.bullets.splice(bulletIndex, 1);
+      } else {
+        // Vérifier les collisions avec les envahisseurs
+        invaders.forEach((invader, invaderIndex) => { // Utilisez invaders ici
+          if (this.checkCollision(bullet, invader)) {
+              bullet.element.remove();
+              invader.remove();
+              this.bullets.splice(bulletIndex, 1);
+              invaders.splice(invaderIndex, 1);
+          }
+        });
       }
     });
   }
+  checkCollision(bullet, invader) {
+    const bulletRect = bullet.element.getBoundingClientRect();
+    const invaderRect = invader.element.getBoundingClientRect();
+
+    return !(
+      bulletRect.top > invaderRect.bottom ||
+      bulletRect.bottom < invaderRect.top ||
+      bulletRect.right < invaderRect.left ||
+      bulletRect.left > invaderRect.right
+    );
+  }
 }
+
 
 const player = new Player(grid);
 
@@ -64,7 +85,7 @@ function gameLoop(timestamp) {
   lastTime = timestamp;
   player.move(direction, deltaTime);
   player.updateBullets();
-  checkCollision(player, invaders)
+  moveInvaders();
   requestAnimationFrame(gameLoop);
 }
 
@@ -81,7 +102,7 @@ const updateDirection = () => {
     direction = 0;
     return;
   }
-  
+
   if (keys.ArrowLeft && keys.ArrowRight) {
     direction = 0;
   } else if (keys.ArrowRight) {
@@ -99,7 +120,7 @@ const throttledShoot = throttle(() => {
 
 window.addEventListener("keydown", (event) => {
   if (isPaused || isGameOver) return;
-  
+
   if (event.key in keys) {
     keys[event.key] = true;
     updateDirection();
@@ -116,45 +137,3 @@ window.addEventListener("keyup", (event) => {
     updateDirection();
   }
 });
-
-function checkCollision(player, invaders){
-  // Collisions Bullets/Invaders
-  player.bullets.forEach((bullet, bulletIndex) => {
-    console.log(bullet)
-    console.log(invaders)
-    invaders.forEach((invader, invaderIndex) => {
-      if (
-        bullet.x < invader.x + invader.width &&
-        bullet.x + bullet.width > invader.x &&
-        bullet.y < invader.y + invader.height &&
-        bullet.y + bullet.height > invader.y
-      ) {
-        // Collision détectée
-        bullet.element.remove();
-        player.bullets.splice(bulletIndex, 1);
-        
-        invader.element.remove();
-        invaders.splice(invaderIndex, 1);
-        
-        // ajouter ici la logique score
-      }
-    });
-  });
-  invaders.forEach((invader) => {
-    if (
-      invader.x < player.x + player.element.clientWidth &&
-      invader.x + invader.width > player.x &&
-      invader.y + invader.height > player.element.offsetTop
-    ) {
-      // Game Over si un invader touche le joueur
-      endGame();
-    }
-  });
-}
-
-function endGame() {
-  isGameOver = true;
-  // Ajouter votre logique de fin de jeu
-}
-
-export { checkCollision }
