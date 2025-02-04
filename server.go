@@ -45,8 +45,14 @@ func GameHandler(w http.ResponseWriter, r *http.Request) {
 		tmpl, _ := template.ParseFiles("./web/menu.html")
 		tmpl.Execute(w, nil)
 	case "/game":
+		mode := r.URL.Query().Get("mode")
+		data := struct {
+			Mode string
+		}{
+			Mode: mode,
+		}
 		tmpl, _ := template.ParseFiles("./web/index.html")
-		tmpl.Execute(w, nil)
+		tmpl.Execute(w, data)
 	case "/highscores":
 		tmpl, _ := template.ParseFiles("./web/highscores.html")
 		tmpl.Execute(w, nil)
@@ -128,7 +134,7 @@ func saveScore(score Score) error {
 	return nil
 }
 
-// Hanfle Function for the get API request
+// Handle Function for the get API request
 func getAllScores(w http.ResponseWriter, r *http.Request) {
 	scores, err := getScores()
 	if err != nil {

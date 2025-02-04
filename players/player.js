@@ -6,6 +6,7 @@
 import { Bullet, throttle } from "./shoot.js";
 
 const game_container = document.getElementById("game-container");
+const isInfiniteMode = gameMode === "infinite";
 
 class Player {
   constructor(container) {
@@ -63,10 +64,25 @@ function gameLoop(timestamp) {
   lastTime = timestamp;
   player.move(direction, deltaTime);
   player.updateBullets();
+  if (isInfiniteMode) {
+    handleInfiniteMode();
+  } else {
+    handleStoryMode();
+  }
   requestAnimationFrame(gameLoop);
 }
 
 requestAnimationFrame(gameLoop);
+
+function handleInfiniteMode() {
+  // Implémentez ici la logique spécifique au mode infini
+  // Par exemple, générer des vagues d'ennemis sans fin
+}
+
+function handleStoryMode() {
+  // Implémentez ici la logique spécifique au mode histoire
+  // Par exemple, progression à travers des niveaux prédéfinis
+}
 
 let keys = {
   ArrowRight: false,
