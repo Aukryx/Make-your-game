@@ -31,14 +31,14 @@ class Bullet {
     
     this.moveInterval = setInterval(() => {
       if (isPaused || isGameOver) {
-        return; // Skip position update but keep interval running
+        return; 
       }
       
       this.y += 5; // Bullet speed
       this.updatePosition();
       
       if (this.y > game.offsetHeight) {
-        this.destroy(); // Use new destroy method
+        this.destroy();
       }
     }, 20);
   }
