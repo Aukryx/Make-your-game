@@ -124,11 +124,9 @@ header {
   bottom: 100px;
 }
 
-.protection-block {
-  width: var(--PROTECTION-WIDTH);
-  height: var(--PROTECTION-HEIGHT);
-  background-color: var(--PROTECTION-COLOR);
-  clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+.wall img{
+  width: 60px;
+  height: 60px;
 }
 
 #spaceship {

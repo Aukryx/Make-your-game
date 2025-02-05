@@ -37,7 +37,7 @@ class Invader {
     tieDVPng.src = "/web/assets/tieDV.png"
     tieDVPng.alt = "tieDV"
 
-    element.appendChild(tiePng)
+    element.appendChild(tieDVPng)
     
     element.id = `invader-${this.id}`
     //modifier l'image que l'on veut ici
