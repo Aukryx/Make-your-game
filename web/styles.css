@@ -86,35 +86,34 @@ header {
 }
 
 .invader {
-  width: var(--ENEMY-SIZE);
-  height: var(--ENEMY-SIZE);
-  background-color: var(--ENEMY-COLOR);
-  border-radius: 50%;
-  margin: 0 5px;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
 }
 
-.invader::before,
-.invader::after {
-  content: "";
-  position: absolute;
-  background-color: var(--ENEMY-EYE-COLOR);
-  border-radius: 50%;
+.invader img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: none;
+  padding: 0;
+  margin: 0;
 }
 
-.invader::before {
-  width: 8px;
-  height: 8px;
-  top: 5px;
-  left: 5px;
+.stormtrooper img {
+  width: 60px;
+  height: 60px;
 }
 
-.invader::after {
-  width: 8px;
-  height: 8px;
-  top: 5px;
-  right: 5px;
+.tie img {
+  width: 30px;
+  height: 30px;
+}
+
+.tieDV img {
+  width: 35px;
+  height: 35px;
 }
 
 #line-of-protection {
@@ -125,11 +124,9 @@ header {
   bottom: 100px;
 }
 
-.protection-block {
-  width: var(--PROTECTION-WIDTH);
-  height: var(--PROTECTION-HEIGHT);
-  background-color: var(--PROTECTION-COLOR);
-  clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+.wall img{
+  width: 60px;
+  height: 60px;
 }
 
 #spaceship {
@@ -144,6 +141,16 @@ header {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+}
+
+#spaceship img {
+  width: 50px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  background: none;
+  padding: 0;
+  margin: 0;
 }
 
 .game-paused {
