@@ -4,7 +4,6 @@
 //Dans la console, la position Y de la balle ne bouge pas quand je met pause. 
 
 import { Bullet, throttle } from "./shoot.js";
-import { invaders, moveInvaders, setupGame } from "../enemies/invaders.js";
 
 const game_container = document.getElementById("game-container");
 
@@ -15,7 +14,7 @@ class Player {
     this.speed = 0.5;
     this.container = container;
     this.bullets = [];
-    // this.invaders = invaders
+    this.invaders = invaders
     this.init();
   }
 
@@ -32,9 +31,14 @@ class Player {
   }
 
   shoot() {
-    if (isPaused || isGameOver) return; // Vérifiez si le jeu est en pause ou terminé
+    if (isPaused || isGameOver) return;
 
-    const bullet = new Bullet(this.x, this.element.offsetTop, this.container);
+    // Calculer la position relative au game-container
+    const gameContainerRect = game_container.getBoundingClientRect();
+    const spaceshipRect = this.element.getBoundingClientRect();
+    const bulletY = spaceshipRect.top - gameContainerRect.top - 10;
+    
+    const bullet = new Bullet(this.x, bulletY, this.container);
     this.bullets.push(bullet);
   }
 
@@ -50,12 +54,12 @@ class Player {
         this.bullets.splice(bulletIndex, 1);
       } else {
         // Vérifier les collisions avec les envahisseurs
-        invaders.forEach((invader, invaderIndex) => { // Utilisez invaders ici
+        invaders.forEach((invader, invaderIndex) => {
           if (this.checkCollision(bullet, invader)) {
-              bullet.element.remove();
-              invader.remove();
-              this.bullets.splice(bulletIndex, 1);
-              invaders.splice(invaderIndex, 1);
+            bullet.element.remove();
+            invader.element.remove();
+            this.bullets.splice(bulletIndex, 1);
+            invaders.splice(invaderIndex, 1);
           }
         });
       }
@@ -84,8 +88,7 @@ function gameLoop(timestamp) {
   const deltaTime = (timestamp - lastTime) / 1000;
   lastTime = timestamp;
   player.move(direction, deltaTime);
-  player.updateBullets();
-  moveInvaders();
+  player.updateBullets(invaders);
   requestAnimationFrame(gameLoop);
 }
 
