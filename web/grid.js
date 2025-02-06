@@ -20,13 +20,23 @@ const createProtectionBlocks = () => {
         const block = document.createElement('div');
         block.className = 'protection-block wall';
         block.id = `protection-block-${i}`;
+
         const wallJPEG = document.createElement('img');
-        wallJPEG.src = "/web/assets/wall1.png"
-        wallJPEG.alt = "wall"
-        block.appendChild(wallJPEG)
+        wallJPEG.src = "/web/assets/wall1.png";
+        wallJPEG.alt = "wall";
+
+        const number = document.createElement('span');
+        number.className = 'block-number';
+        number.id = `block-number-${i}`;
+        number.textContent = '3'; // Valeur initiale
+
+        block.appendChild(wallJPEG);
+        block.appendChild(number); // Ajoutez cette ligne
         lineOfProtection.appendChild(block);
     }
 }
 
-createProtectionBlocks();
+document.addEventListener('DOMContentLoaded', () => {
+    createProtectionBlocks();
+});
 
