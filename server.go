@@ -113,8 +113,8 @@ func saveScore(score Score) error {
 
 	// Update ranks based on the sorted scores
 	for i := range scores {
-    scores[i].Rank = i + 1
-  }
+		scores[i].Rank = i + 1
+	}
 
 	data, err := json.MarshalIndent(scores, "", "  ")
 	if err != nil {

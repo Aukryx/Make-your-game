@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheese Invaders - Meilleurs Scores</title>
+    <link rel="stylesheet" href="/web/highscores.css">
+</head>
+<body>
+    <div class="leaderboard-container">
+        <h1>Cheese Invaders - Meilleurs Scores</h1>
+        <table id="highscoreTable">
+            <thead>
+                <tr>
+                    <th>Rang</th>
+                    <th>Nom</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+                <!-- Les scores seront ajoutés ici dynamiquement -->
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button id="prevPage" disabled>Précédent</button>
+            <span id="pageInfo">Page 1 / 1</span>
+            <button id="nextPage" disabled>Suivant</button>
+        </div>
+        <button id="backButton">Retour au menu</button>
+    </div>
+    <script src="/web/highscores.js"></script>
+</body>
+</html>

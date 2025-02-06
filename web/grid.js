@@ -18,8 +18,12 @@ const createProtectionBlocks = () => {
     const lineOfProtection = document.getElementById('line-of-protection');
     for (let i = 0; i < 4; i++) {
         const block = document.createElement('div');
-        block.className = 'protection-block';
+        block.className = 'protection-block wall';
         block.id = `protection-block-${i}`;
+        const wallJPEG = document.createElement('img');
+        wallJPEG.src = "/web/assets/wall1.png"
+        wallJPEG.alt = "wall"
+        block.appendChild(wallJPEG)
         lineOfProtection.appendChild(block);
     }
 }
