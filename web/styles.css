@@ -408,11 +408,14 @@ header {
   background-color: #2980b9;
 }
 
-/* projectiles */
 .bullet {
   position: absolute;
   width: 5px;
   height: 10px;
   background-color: red;
+  z-index: 5; /* Ajout d'un z-index pour s'assurer que les balles restent visibles */
 }
 
+.bullet.game-paused {
+  filter: brightness(30%);
+}

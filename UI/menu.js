@@ -99,9 +99,19 @@ function pauseGame() {
         isPaused = true;
         stopTimer();
         
-        mainElements.forEach((elementId) => {
-            const element = document.getElementById(elementId);
-            if (element) element.classList.add("game-paused");
+        // Ajout des balles à la liste des éléments à mettre en pause
+        const elements = [...mainElements, 'bullet'];
+        
+        elements.forEach((elementId) => {
+            if (elementId === 'bullet') {
+                // Pour les balles, on sélectionne toutes les balles présentes
+                document.querySelectorAll('.bullet').forEach(bullet => {
+                    bullet.classList.add("game-paused");
+                });
+            } else {
+                const element = document.getElementById(elementId);
+                if (element) element.classList.add("game-paused");
+            }
         });
         
         pauseOverlay.style.display = "block";
@@ -114,9 +124,17 @@ function resumeGame() {
         isPaused = false;
         startTimer();
         
-        mainElements.forEach((elementId) => {
-            const element = document.getElementById(elementId);
-            if (element) element.classList.remove("game-paused");
+        const elements = [...mainElements, 'bullet'];
+        
+        elements.forEach((elementId) => {
+            if (elementId === 'bullet') {
+                document.querySelectorAll('.bullet').forEach(bullet => {
+                    bullet.classList.remove("game-paused");
+                });
+            } else {
+                const element = document.getElementById(elementId);
+                if (element) element.classList.remove("game-paused");
+            }
         });
         
         pauseOverlay.style.display = "none";

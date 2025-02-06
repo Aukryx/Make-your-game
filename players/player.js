@@ -1,8 +1,3 @@
-
-//TO DO : Quand je met la pause, la position des balles change, ma théorie est que la balle qui n'est pas dans le menu pause a comme position 0 en vertical
-//le bord de l'écran alors que dans le menu pause, la position 0 est le bas du header.
-//Dans la console, la position Y de la balle ne bouge pas quand je met pause. 
-
 import { Bullet, throttle } from "./shoot.js";
 
 const game_container = document.getElementById("game-container");
@@ -37,19 +32,11 @@ class Player {
     const bulletY = spaceshipRect.top - gameContainerRect.top;
     
     const bullet = new Bullet(this.x, bulletY, this.container);
-    this.bullets.push(bullet);
-  }
-
-  updateBullets() {
-    if (isPaused || isGameOver) return;
+    bullet.launch();
     
-    this.bullets.forEach((bullet, index) => {
-      bullet.update();
-      if (bullet.y < 0) {
-        bullet.element.remove();
-        this.bullets.splice(index, 1);
-      }
-    });
+    // Nettoyage des balles détruites de notre tableau
+    this.bullets = this.bullets.filter(b => b.moveInterval !== null);
+    this.bullets.push(bullet);
   }
 }
 
@@ -62,7 +49,6 @@ function gameLoop(timestamp) {
   const deltaTime = (timestamp - lastTime) / 1000;
   lastTime = timestamp;
   player.move(direction, deltaTime);
-  player.updateBullets();
   requestAnimationFrame(gameLoop);
 }
 
