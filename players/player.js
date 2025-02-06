@@ -4,6 +4,7 @@
 //Dans la console, la position Y de la balle ne bouge pas quand je met pause. 
 
 import { Bullet, throttle } from "./shoot.js";
+import { invaders } from "../enemies/invaders.js";
 
 const game_container = document.getElementById("game-container");
 
@@ -140,3 +141,5 @@ window.addEventListener("keyup", (event) => {
     updateDirection();
   }
 });
+
+
