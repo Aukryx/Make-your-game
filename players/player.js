@@ -4,6 +4,7 @@
 //Dans la console, la position Y de la balle ne bouge pas quand je met pause. 
 
 import { Bullet, throttle } from "./shoot.js";
+import { invaders } from "../enemies/invaders.js";
 
 const game_container = document.getElementById("game-container");
 
@@ -14,6 +15,7 @@ class Player {
     this.speed = 0.5;
     this.container = container;
     this.bullets = [];
+    this.invaders = invaders
     this.init();
   }
 
@@ -23,7 +25,7 @@ class Player {
 
   move(direction, deltaTime) {
     if (isPaused || isGameOver) return;
-    
+
     this.x += direction * this.speed * deltaTime * 500;
     this.x = Math.max(30, Math.min(game_container.clientWidth - 30, this.x));
     this.element.style.left = `${this.x}px`;
@@ -31,10 +33,11 @@ class Player {
 
   shoot() {
     if (isPaused || isGameOver) return;
-    
-    const gameContainerRect = this.container.getBoundingClientRect();
+
+    // Calculer la position relative au game-container
+    const gameContainerRect = game_container.getBoundingClientRect();
     const spaceshipRect = this.element.getBoundingClientRect();
-    const bulletY = spaceshipRect.top - gameContainerRect.top;
+    const bulletY = spaceshipRect.top - gameContainerRect.top - 10;
     
     const bullet = new Bullet(this.x, bulletY, this.container);
     this.bullets.push(bullet);
@@ -42,16 +45,40 @@ class Player {
 
   updateBullets() {
     if (isPaused || isGameOver) return;
-    
-    this.bullets.forEach((bullet, index) => {
+
+    this.bullets.forEach((bullet, bulletIndex) => {
       bullet.update();
+
+      // Vérifier si le projectile sort de l'écran
       if (bullet.y < 0) {
         bullet.element.remove();
-        this.bullets.splice(index, 1);
+        this.bullets.splice(bulletIndex, 1);
+      } else {
+        // Vérifier les collisions avec les envahisseurs
+        invaders.forEach((invader, invaderIndex) => {
+          if (this.checkCollision(bullet, invader)) {
+            bullet.element.remove();
+            invader.element.remove();
+            this.bullets.splice(bulletIndex, 1);
+            invaders.splice(invaderIndex, 1);
+          }
+        });
       }
     });
   }
+  checkCollision(bullet, invader) {
+    const bulletRect = bullet.element.getBoundingClientRect();
+    const invaderRect = invader.element.getBoundingClientRect();
+
+    return !(
+      bulletRect.top > invaderRect.bottom ||
+      bulletRect.bottom < invaderRect.top ||
+      bulletRect.right < invaderRect.left ||
+      bulletRect.left > invaderRect.right
+    );
+  }
 }
+
 
 const player = new Player(grid);
 
@@ -62,7 +89,7 @@ function gameLoop(timestamp) {
   const deltaTime = (timestamp - lastTime) / 1000;
   lastTime = timestamp;
   player.move(direction, deltaTime);
-  player.updateBullets();
+  player.updateBullets(invaders);
   requestAnimationFrame(gameLoop);
 }
 
@@ -79,7 +106,7 @@ const updateDirection = () => {
     direction = 0;
     return;
   }
-  
+
   if (keys.ArrowLeft && keys.ArrowRight) {
     direction = 0;
   } else if (keys.ArrowRight) {
@@ -97,7 +124,7 @@ const throttledShoot = throttle(() => {
 
 window.addEventListener("keydown", (event) => {
   if (isPaused || isGameOver) return;
-  
+
   if (event.key in keys) {
     keys[event.key] = true;
     updateDirection();
@@ -114,3 +141,5 @@ window.addEventListener("keyup", (event) => {
     updateDirection();
   }
 });
+
+

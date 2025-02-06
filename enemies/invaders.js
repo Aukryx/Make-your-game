@@ -12,7 +12,7 @@ import { Bullet, shootEnemy } from "../enemies/shootEnemy.js";
 
 
 let direction = 1;
-let invaders = [];
+export let invaders = [];
 let gameWidth = document.getElementById("game-container").clientWidth;
 
 class Invader {
@@ -116,4 +116,3 @@ export function setupGame() {
       }
     }, 3000); // Les envahisseurs tirent toutes les secondes
   }
-

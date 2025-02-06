@@ -15,6 +15,7 @@ class Bullet {
     update() {
       this.y -= this.speed;
       this.updatePosition()
+      
     }
   
     // Mise à jour de la position visuelle du projectile  
