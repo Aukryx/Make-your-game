@@ -122,15 +122,24 @@ header {
   width: 100%;
   position: absolute;
   bottom: 100px;
-}
-
-.protection-block img {
-  position: relative;
-  z-index: 0;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .protection-block {
   position: relative;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0; /* Empêche le redimensionnement */
+}
+
+.protection-block img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .block-number {
@@ -138,14 +147,11 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  text-shadow: 1px 1px 2px black;
-  z-index: 1; /* Ajoutez cette ligne */
   font-size: 24px;
-  color: #FF0000; /* Rouge vif, par exemple */
+  color: #FF0000;
   text-shadow: 2px 2px 4px black;
+  z-index: 1;
+  pointer-events: none; /* Empêche l'interaction avec le numéro */
 }
 
 .wall img{
