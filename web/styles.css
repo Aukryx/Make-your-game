@@ -419,3 +419,7 @@ header {
 .bullet.game-paused {
   filter: brightness(30%);
 }
+
+.bullet.game-over {
+  filter: brightness(30%);
+}

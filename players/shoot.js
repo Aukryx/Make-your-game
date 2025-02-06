@@ -5,14 +5,18 @@ class Bullet {
     this.element = this.createElement();
     this.container = container;
     this.moveInterval = null;
-    this.initialY = y; // Stockage de la position Y initiale
+    this.initialY = y;
   }
 
   createElement() {
     const element = document.createElement('div');
     element.className = 'bullet';
+    // Ajout des classes appropriées selon l'état du jeu
     if (isPaused) {
       element.classList.add('game-paused');
+    }
+    if (isGameOver) {
+      element.classList.add('game-over');
     }
     element.style.position = 'absolute';
     element.style.width = '5px';
@@ -35,7 +39,7 @@ class Bullet {
     this.container.appendChild(this.element);
     
     this.moveInterval = setInterval(() => {
-      if (isPaused) {
+      if (isPaused || isGameOver) {
         return;
       }
 

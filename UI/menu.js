@@ -159,9 +159,19 @@ function gameOver() {
         
         stopTimer();
         
-        mainElements.forEach(elementId => {
-            const element = document.getElementById(elementId);
-            if (element) element.classList.add('game-over');
+        // Ajout des balles à la liste des éléments affectés par le game over
+        const elements = [...mainElements, 'bullet'];
+        
+        elements.forEach(elementId => {
+            if (elementId === 'bullet') {
+                // Pour les balles, on sélectionne toutes les balles présentes
+                document.querySelectorAll('.bullet').forEach(bullet => {
+                    bullet.classList.add('game-over');
+                });
+            } else {
+                const element = document.getElementById(elementId);
+                if (element) element.classList.add('game-over');
+            }
         });
         
         gameOverOverlay.style.display = 'block';
@@ -175,7 +185,7 @@ function restartGame() {
     timer.textContent = "00:00:00";
     
     // Reset score
-    currentScore = 0
+    currentScore = 0;
     score.textContent = "0";
     
     // Reset lives
@@ -185,8 +195,13 @@ function restartGame() {
     // Reset game elements
     const grid = document.getElementById("grid");
     if (grid) grid.innerHTML = "";
+    
+    // Supprimer toutes les balles existantes
+    document.querySelectorAll('.bullet').forEach(bullet => {
+        bullet.remove();
+    });
+    
     createLine(30);
-    // createEnnemies(50);
     
     // Reset game state
     isGameOver = false;
@@ -198,11 +213,20 @@ function restartGame() {
     pauseOverlay.style.display = 'none';
     pauseMenu.style.display = 'none';
     
-    mainElements.forEach(elementId => {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.classList.remove('game-over');
-            element.classList.remove('game-paused');
+    // Réinitialiser les classes sur tous les éléments
+    const elements = [...mainElements, 'bullet'];
+    elements.forEach(elementId => {
+        if (elementId === 'bullet') {
+            document.querySelectorAll('.bullet').forEach(bullet => {
+                bullet.classList.remove('game-over');
+                bullet.classList.remove('game-paused');
+            });
+        } else {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.classList.remove('game-over');
+                element.classList.remove('game-paused');
+            }
         }
     });
     
