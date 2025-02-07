@@ -34,20 +34,39 @@ class Bullet {
         return; 
       }
       
-      this.y += 5; // Bullet speed
+      this.y += 5;
       this.updatePosition();
       
-      // Check collision with player
+      // Check protection block collisions
+      const blocks = document.querySelectorAll('.protection-block');
+      for (const block of blocks) {
+        if (this.checkCollision(this, block)) {
+          const blockId = block.id;
+          const numberElement = document.getElementById(`block-number-${blockId.split('-')[2]}`);
+          const currentHealth = parseInt(numberElement.textContent);
+          
+          if (currentHealth > 1) {
+            numberElement.textContent = (currentHealth - 1).toString();
+          } else {
+            block.remove();
+          }
+          
+          this.destroy();
+          return;
+        }
+      }
+      
+      // Check player collision
       const player = document.getElementById("spaceship");
       if (this.checkCollision(this, player)) {
         const event = new CustomEvent('playerHit');
-        currentLives--
-        livesDisplay.textContent = currentLives
+        currentLives--;
+        livesDisplay.textContent = currentLives;
+        document.dispatchEvent(event);
+        this.destroy();
         if (currentLives <= 0) {
           gameOver();
       }
-        document.dispatchEvent(event);
-        this.destroy();
         return;
       }
       
@@ -57,15 +76,15 @@ class Bullet {
     }, 20);
   }
 
-  checkCollision(bullet, player) {
+  checkCollision(bullet, element) {
     const bulletRect = bullet.element.getBoundingClientRect();
-    const playerRect = player.getBoundingClientRect();
+    const elementRect = element.getBoundingClientRect();
 
     return !(
-      bulletRect.top > playerRect.bottom ||
-      bulletRect.bottom < playerRect.top ||
-      bulletRect.right < playerRect.left ||
-      bulletRect.left > playerRect.right
+      bulletRect.top > elementRect.bottom ||
+      bulletRect.bottom < elementRect.top ||
+      bulletRect.right < elementRect.left ||
+      bulletRect.left > elementRect.right
     );
   }
 
