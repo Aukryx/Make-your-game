@@ -89,10 +89,26 @@ export function moveInvaders() {
   }
   
   invaders.forEach((invader) => invader.updatePosition());
+  setInterval(checkGameOverLine, 100);
+}
+
+function checkGameOverLine() {
+  const gameOverLine = document.querySelector('.game-over-line');
+  const linePosition = gameOverLine.getBoundingClientRect().top;
+  
+  invaders.forEach(invader => {
+    const invaderBottom = invader.element.getBoundingClientRect().bottom;
+    if (invaderBottom > linePosition) {
+      gameOver();
+    }
+  });
 }
 
 export function setupGame() {
   const game_container = document.getElementById("game-container");
+  const gameOverLine = document.createElement('div');
+  gameOverLine.className = 'game-over-line';
+  document.getElementById('game-container').appendChild(gameOverLine);
   // Create invaders grid
   const rows = 5;
   const cols = 10;
