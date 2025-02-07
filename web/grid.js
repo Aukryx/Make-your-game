@@ -35,6 +35,4 @@ const createProtectionBlocks = () => {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
     createProtectionBlocks();
-});
