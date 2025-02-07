@@ -22,6 +22,7 @@ class Invader {
     this.x = x;
     this.y = y;
     this.id = id
+
     this.element = this.createElement();
   }
   
@@ -52,6 +53,7 @@ class Invader {
   updatePosition(element = this.element) {
     element.style.left = `${this.x}px`;
     element.style.top = `${this.y}px`;
+    
   }
   
   remove() {

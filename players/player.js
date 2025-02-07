@@ -61,6 +61,9 @@ class Player {
             invader.element.remove();
             this.bullets.splice(bulletIndex, 1);
             invaders.splice(invaderIndex, 1);
+            const scoreElement = document.getElementById('score');
+           const currentScore = parseInt(scoreElement.textContent);
+           scoreElement.textContent = currentScore + 50;
           }
         });
       }
@@ -80,7 +83,7 @@ class Player {
 }
 
 
-const player = new Player(grid);
+export const player = new Player(grid);
 
 let lastTime = 0;
 let direction = 0;
@@ -141,5 +144,3 @@ window.addEventListener("keyup", (event) => {
     updateDirection();
   }
 });
-
-

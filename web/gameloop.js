@@ -1,5 +1,5 @@
 import { setupGame, moveInvaders } from "../enemies/invaders.js";
-import { handleCollisions } from "../players/collisions.js";
+// import { handleCollisions } from "../players/collisions.js";
 
 let gameState = {
   player: null,

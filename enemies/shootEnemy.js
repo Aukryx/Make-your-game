@@ -37,10 +37,36 @@ class Bullet {
       this.y += 5; // Bullet speed
       this.updatePosition();
       
+      // Check collision with player
+      const player = document.getElementById("spaceship");
+      if (this.checkCollision(this, player)) {
+        const event = new CustomEvent('playerHit');
+        currentLives--
+        livesDisplay.textContent = currentLives
+        if (currentLives <= 0) {
+          gameOver();
+      }
+        document.dispatchEvent(event);
+        this.destroy();
+        return;
+      }
+      
       if (this.y > game.offsetHeight) {
         this.destroy();
       }
     }, 20);
+  }
+
+  checkCollision(bullet, player) {
+    const bulletRect = bullet.element.getBoundingClientRect();
+    const playerRect = player.getBoundingClientRect();
+
+    return !(
+      bulletRect.top > playerRect.bottom ||
+      bulletRect.bottom < playerRect.top ||
+      bulletRect.right < playerRect.left ||
+      bulletRect.left > playerRect.right
+    );
   }
 
   destroy() {
