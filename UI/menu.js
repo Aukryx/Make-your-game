@@ -16,7 +16,7 @@ let time = 0;
 let timerStarted = false;
 let interval;
 let currentScore = 0
-let currentLives = 3;
+let currentLives = 666;
 let pauseOverlay;
 let isGameOver = false;
 let isPaused = false;
