@@ -178,6 +178,12 @@ async function gameOver() {
 }
 
 function restartGame() {
+  const sendBtn = document.getElementById("gameover-save-btn");
+  if (sendBtn) {
+    sendBtn.disabled = false;
+    sendBtn.style.background = "#3498db";
+  }
+
   // Reset time
   time = 0;
   timer.textContent = "00:00:00";

@@ -4,20 +4,20 @@ import { isGameOver, isPaused } from "../UI/menu.js";
 
 let gameState = {
   player: null,
-  invaders: []
+  invaders: [],
 };
 
 function gameInit() {
   setupGame();
   gameLoop();
+  createProtectionBlocks();
 }
 
 function gameLoop() {
   if (!isGameOver && !isPaused) {
     moveInvaders();
-    if (gameState.player){
-
-      handleCollisions(gameState.player , window.invaders)
+    if (gameState.player) {
+      handleCollisions(gameState.player, window.invaders);
     }
   }
 
