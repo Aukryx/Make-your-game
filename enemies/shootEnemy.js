@@ -1,22 +1,23 @@
 import { isGameOver, isPaused } from "../UI/menu.js";
 class Bullet {
   constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.element = this.createElement();
-    this.moveInterval = null;
+      this.x = x;
+      this.y = y;
+      this.element = this.createElement();
+      this.moveInterval = null;
   }
-    
+  
   createElement() {
-    if (isPaused || isGameOver) return;
-    const element = document.createElement("div");
-    element.className = "bullet";
-    element.style.position = "absolute";
-    element.style.width = "5px";
-    element.style.height = "10px";
-    element.style.backgroundColor = "blue";
-    this.updatePosition(element);
-    return element;
+      if (isPaused || isGameOver) return;
+      const element = document.createElement("div");
+      element.className = "bullet";
+      element.style.position = "absolute";
+      element.style.width = "5px";
+      element.style.height = "10px";
+      element.style.backgroundColor = "blue";
+      element._bulletInstance = this;
+      this.updatePosition(element);
+      return element;
   }
         
   updatePosition(element = this.element) {
@@ -103,6 +104,19 @@ class Bullet {
 function shootEnemy(invader) {
   const bullet = new Bullet(invader.x + invader.width / 2, invader.y + invader.height);
   bullet.launch();
+}
+
+export function clearEnemyBullets() {
+  const enemyBullets = document.querySelectorAll('.bullet');
+  enemyBullets.forEach(bullet => {
+      if (bullet.style.backgroundColor === 'blue') {
+          const bulletInstance = bullet._bulletInstance;
+          if (bulletInstance && bulletInstance.moveInterval) {
+              clearInterval(bulletInstance.moveInterval);
+          }
+          bullet.remove();
+      }
+  });
 }
 
 export { Bullet, shootEnemy };

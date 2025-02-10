@@ -1,5 +1,7 @@
 import { respawnInvaders, clearInvaders } from "../enemies/invaders.js";
 import { createProtectionBlocks, clearProtectionBlocks } from "../web/grid.js";
+import { clearEnemyBullets } from "../enemies/shootEnemy.js";
+import { clearPlayerBullets } from "../players/shoot.js";
 
 // DOM Elements
 const score = document.getElementById("score");
@@ -194,6 +196,8 @@ function restartGame() {
   isGameOver = false;
   isPaused = false;
 
+  clearEnemyBullets()
+  clearPlayerBullets()
   clearInvaders();
   clearProtectionBlocks();
 
