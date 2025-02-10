@@ -1,4 +1,5 @@
-import { isGameOver, isPaused } from "../UI/menu.js";
+import { isGameOver, isPaused, currentLives } from "../UI/menu.js";
+import { gameOver } from "../UI/menu.js";
 class Bullet {
   constructor(x, y) {
       this.x = x;
@@ -6,7 +7,8 @@ class Bullet {
       this.element = this.createElement();
       this.moveInterval = null;
   }
-  
+
+
   createElement() {
       if (isPaused || isGameOver) return;
       const element = document.createElement("div");
@@ -59,18 +61,19 @@ class Bullet {
       }
       
       // Check player collision
+      const currentHealth = document.getElementById("lives")
       const player = document.getElementById("spaceship");
       if (this.checkCollision(this, player)) {
         const event = new CustomEvent('playerHit');
-        currentLives--;
-        livesDisplay.textContent = currentLives;
-        document.dispatchEvent(event);
+        currentLives.value--;
+        currentHealth.textContent = currentLives.value
+
         this.destroy();
-        if (currentLives <= 0) {
-          gameOver();
-      }
-        return;
-      }
+        if (currentLives.value <= 0) {
+            gameOver();
+            return;
+        }
+    }
       
       if (this.y > game.offsetHeight) {
         this.destroy();

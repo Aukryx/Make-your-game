@@ -7,7 +7,7 @@ import { clearPlayerBullets } from "../players/shoot.js";
 const score = document.getElementById("score");
 const highscore = document.getElementById("highscore");
 const timer = document.getElementById("time");
-const livesDisplay = document.getElementById("lives");
+export const livesDisplay = document.getElementById("lives"); // Export livesDisplay
 const mainElements = ["grid", "line-of-protection", "spaceship"];
 const gameOverMenu = document.getElementById("game-over-menu");
 const pauseMenu = document.getElementById("pause-menu");
@@ -18,14 +18,21 @@ let time = 0;
 let timerStarted = false;
 let interval;
 let currentScore = 0;
-let currentLives = 2;
+export let currentLives = {
+  value: 3
+};
 let pauseOverlay;
 export let isGameOver = false;
 export let isPaused = false;
 
+// Update lives display
+export function updateLivesDisplay() {
+    livesDisplay.textContent = currentLives.value;
+}
+
 // Setup game over menu
 function initGameOverOverlay() {
-  livesDisplay.textContent = currentLives;
+  livesDisplay.textContent = currentLives.value;
   gameOverOverlay.className = "game-over-overlay";
   document.body.appendChild(gameOverOverlay);
   gameOverMenu.innerHTML = `
@@ -130,15 +137,15 @@ function resumeGame() {
 }
 
 function loseLife() {
-  currentLives--;
-  livesDisplay.textContent = currentLives;
+  currentLives.value--;
+  livesDisplay.textContent = currentLives.value;
 
-  if (currentLives <= 0) {
+  if (currentLives.value <= 0) {
     gameOver();
   }
 }
 
-async function gameOver() {
+export async function gameOver() {
   // Display final score
   if (!isGameOver) {
     isGameOver = true;
@@ -189,8 +196,8 @@ function restartGame() {
   score.textContent = "0";
 
   // Reset lives
-  currentLives = 3;  
-  livesDisplay.textContent = currentLives;
+  currentLives.value = 3;  
+  livesDisplay.textContent = currentLives.value;
 
   // Reset game state
   isGameOver = false;
