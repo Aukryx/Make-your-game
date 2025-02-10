@@ -135,7 +135,7 @@ function loseLife() {
   }
 }
 
-function gameOver() {
+async function gameOver() {
   if (!isGameOver) {
     isGameOver = true;
     const finalScore = document.getElementById("final-score");
@@ -151,7 +151,7 @@ function gameOver() {
     const nameInput = document.getElementById("name");
     const sendBtn = document.getElementById("gameover-save-btn");
     if (sendBtn) {
-      sendBtn.addEventListener("click", () => {
+      sendBtn.addEventListener("click", async () => {
         const name = nameInput.value.trim();
         if (name) {
           const score = {
@@ -160,10 +160,10 @@ function gameOver() {
             Time: timer.textContent,
             Rank: 0,
           };
-          sendScore(score);
+          await sendScore(score);
           sendBtn.disabled = true;
           sendBtn.style.background = "black";
-          init();
+          await updateLeaderboard();
         }
       });
     } else {

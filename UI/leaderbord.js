@@ -9,20 +9,12 @@ window.addEventListener("DOMContentLoaded", init);
 
 async function init() {
   try {
-    ranks = await getRanks();
-    // Mettre à jour l'affichage du highscore si on a des données
-    if (ranks && ranks.length > 0) {
-      const topScore = ranks[0].Score;
-      const highscore = document.getElementById("highscore");
-      highscore.textContent = topScore;
-    }
+    await updateLeaderboard();
     addToggleButton();
     createPaginationControls();
-    displayRanks(ranks);
     if (VERBOSE >= 1) console.log(ranks);
   } catch (error) {
     console.error("Failed to initialize leaderboard:", error);
-    // You might want to display an error message to the user here
   }
 }
 
@@ -105,9 +97,10 @@ function displayRanks(ranks) {
   // Update pagination buttons state
   const prevButton = document.querySelector(".pagination button:first-child");
   const nextButton = document.querySelector(".pagination button:last-child");
-  prevButton.disabled = currentPage === 1;
-  console.log(ranks);
-  nextButton.disabled = currentPage >= Math.ceil(ranks.length / itemsPerPage);
+  if (prevButton && nextButton) {
+    prevButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage >= Math.ceil(ranks.length / itemsPerPage);
+  }
 
   for (let i = startINdex; i < endIndex; i++) {
     const rank = ranks[i];
@@ -183,5 +176,20 @@ async function sendScore(score) {
     }
   } catch (err) {
     console.error("Failed to send score:", err);
+  }
+}
+
+async function updateLeaderboard() {
+  try {
+    ranks = await getRanks();
+    // Mettre à jour l'affichage du highscore si on a des données
+    if (ranks && ranks.length > 0) {
+      const topScore = ranks[0].Score;
+      const highscore = document.getElementById("highscore");
+      highscore.textContent = topScore;
+    }
+    displayRanks(ranks);
+  } catch (error) {
+    console.error("Failed to update leaderboard:", error);
   }
 }

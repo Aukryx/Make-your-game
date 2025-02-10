@@ -12,20 +12,26 @@
     "Time": "00:06:24"
   },
   {
-    "Name": "Gabriel",
+    "Name": "Nouveau",
     "Rank": 3,
+    "Score": 550000,
+    "Time": "00:05:63"
+  },
+  {
+    "Name": "Gabriel",
+    "Rank": 4,
     "Score": 500000,
     "Time": "00:08:27"
   },
   {
     "Name": "Vincent",
-    "Rank": 4,
+    "Rank": 5,
     "Score": 200000,
     "Time": "00:04:73"
   },
   {
     "Name": "qsdqsd",
-    "Rank": 5,
+    "Rank": 6,
     "Score": 0,
     "Time": "00:01:19"
   }
