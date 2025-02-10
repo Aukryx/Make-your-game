@@ -31,6 +31,7 @@ func LaunchServer(port string) {
 	fs = http.FileServer(http.Dir("./UI/"))
 	http.Handle("/UI/", http.StripPrefix("/UI/", fs))
 	http.HandleFunc("/", GameHandler)
+	http.HandleFunc("/api/scores", ScoreHandler)
 
 	fmt.Printf("Starting server on http://localhost%s\n", server.Addr)
 	if err := server.ListenAndServe(); err != nil {
@@ -50,20 +51,27 @@ func GameHandler(w http.ResponseWriter, r *http.Request) {
 	case "/highscores":
 		tmpl, _ := template.ParseFiles("./web/highscores.html")
 		tmpl.Execute(w, nil)
-	case "/api/scores":
-		if r.Method == "GET" {
-			getAllScores(w, r)
-		} else if r.Method == "POST" {
-			pushNewScore(w, r)
-		}
 	case "/api/scores/highest":
 		if r.Method == "GET" {
-			getHighestScore(w, r)
+			getHighestScore(w)
 		}
 	default:
 		http.NotFound(w, r)
 	}
 }
+
+//Handle score
+func ScoreHandler(w http.ResponseWriter, r *http.Request){
+	if r.URL.Path == "/api/scores"{
+		switch r.Method {
+    case "GET":
+      getAllScores(w)
+    case "POST":
+      pushNewScore(w, r)
+    }
+	}
+}
+
 
 // Score structure
 type Score struct {
@@ -103,8 +111,22 @@ func saveScore(score Score) error {
 		return fmt.Errorf("erreur lors de récupération des scores: %v", err)
 	}
 
-	// Append the new score
-	scores = append(scores, score)
+	exist := false
+
+	for i, elem := range scores {
+		if elem.Name == score.Name {
+			if scores[i].Score <= score.Score{
+				scores[i].Time = score.Time
+				scores[i].Score = score.Score
+        exist = true
+			}
+			exist = true
+    }
+	}
+
+	if!exist {
+    scores = append(scores, score)
+  }
 
 	// Sort scores by personal score in descending order
 	sort.Slice(scores, func(i, j int) bool {
@@ -129,7 +151,7 @@ func saveScore(score Score) error {
 }
 
 // Hanfle Function for the get API request
-func getAllScores(w http.ResponseWriter, r *http.Request) {
+func getAllScores(w http.ResponseWriter) {
 	scores, err := getScores()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -159,7 +181,7 @@ func pushNewScore(w http.ResponseWriter, r *http.Request) {
 }
 
 // Handle Function for the GET API request (highest score)
-func getHighestScore(w http.ResponseWriter, r *http.Request) {
+func getHighestScore(w http.ResponseWriter) {
 	scores, err := getScores()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

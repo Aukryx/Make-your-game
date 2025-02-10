@@ -8,26 +8,40 @@ let VERBOSE = 0;
 window.addEventListener("DOMContentLoaded", init);
 
 async function init() {
-  ranks = await getRanks();
-  // Mettre à jour l'affichage du highscore si on a des données
-  if (ranks && ranks.length > 0) {
-    const topScore = ranks[0].Score;
-    const highscore = document.getElementById("highscore");
+  try {
+    ranks = await getRanks();
+    // Mettre à jour l'affichage du highscore si on a des données
+    if (ranks && ranks.length > 0) {
+      const topScore = ranks[0].Score;
+      const highscore = document.getElementById("highscore");
       highscore.textContent = topScore;
+    }
+    addToggleButton();
+    createPaginationControls();
+    displayRanks(ranks);
+    if (VERBOSE >= 1) console.log(ranks);
+  } catch (error) {
+    console.error("Failed to initialize leaderboard:", error);
+    // You might want to display an error message to the user here
   }
-  addToggleButton();
-  createPaginationControls();
-  displayRanks(ranks);
-  if (VERBOSE >= 1) console.log(ranks);
 }
 
 async function getData(data) {
   try {
     const response = await fetch(data);
-    const dataJson = await response.json();
-    return dataJson;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const text = await response.text(); // Get the response as text first
+    try {
+      return JSON.parse(text); // Try to parse the text as JSON
+    } catch (e) {
+      console.error("Failed to parse JSON:", text);
+      throw new Error("Invalid JSON response");
+    }
   } catch (error) {
-    console.error("Error fetching data", error);
+    console.error("Error fetching data:", error);
+    throw error; // Re-throw the error so it can be handled by the calling function
   }
 }
 
@@ -126,22 +140,48 @@ function displayRanks(ranks) {
 
 async function getRanks() {
   const data = await getData("/api/scores");
-  
+
   // Sort the data first by score (descending), then by time for equal scores
-  return data.sort((a, b) => {
-    // First compare scores (in descending order)
-    if (b.Score !== a.Score) {
-      return b.Score - a.Score;
+  return data
+    .sort((a, b) => {
+      // First compare scores (in descending order)
+      if (b.Score !== a.Score) {
+        return b.Score - a.Score;
+      }
+
+      // If scores are equal, compare times
+      // Convert time strings to Date objects for comparison
+      const timeA = new Date(`1970-01-01T${a.Time}`);
+      const timeB = new Date(`1970-01-01T${b.Time}`);
+
+      return timeA - timeB; // Earlier times come first
+    })
+    .map((rank, index) => ({
+      ...rank,
+      Rank: index + 1, // Update ranks based on new sorting
+    }));
+}
+
+async function sendScore(score) {
+  try {
+    const data = {
+      Name: score.Name,
+      Score: score.Score,
+      Time: score.Time,
+      Rank: 0,
+    };
+
+    const response = await fetch("/api/scores", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
-    // If scores are equal, compare times
-    // Convert time strings to Date objects for comparison
-    const timeA = new Date(`1970-01-01T${a.Time}`);
-    const timeB = new Date(`1970-01-01T${b.Time}`);
-    
-    return timeA - timeB;  // Earlier times come first
-  }).map((rank, index) => ({
-    ...rank,
-    Rank: index + 1  // Update ranks based on new sorting
-  }));
+  } catch (err) {
+    console.error("Failed to send score:", err);
+  }
 }
