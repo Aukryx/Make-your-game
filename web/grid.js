@@ -1,6 +1,6 @@
-const grid = document.getElementById("grid");
-
 const bloc = document.createElement("div");
+const grid = document.getElementById("grid")
+const lineOfProtection = document.getElementById('line-of-protection');
 
 const createLine = (lineCount) => {
   for (let i = 1; i <= lineCount; i++) {
@@ -12,7 +12,7 @@ const createLine = (lineCount) => {
 };
 createLine(30);
 
-const createProtectionBlocks = () => {
+export const createProtectionBlocks = () => {
   const lineOfProtection = document.getElementById("line-of-protection");
   const gameContainer = document.getElementById("game-container");
   const containerWidth = gameContainer.offsetWidth;
@@ -38,3 +38,10 @@ const createProtectionBlocks = () => {
     lineOfProtection.appendChild(block);
   }
 };
+
+export const clearProtectionBlocks = () => {
+    const blocks = document.querySelectorAll('.protection-block');
+    blocks.forEach(block => {
+        block.remove();
+    });
+}

@@ -1,4 +1,5 @@
-// TO DO stop bullets game over and paused from enemies
+import { respawnInvaders, clearInvaders } from "../enemies/invaders.js";
+import { createProtectionBlocks, clearProtectionBlocks } from "../web/grid.js";
 
 // DOM Elements
 const score = document.getElementById("score");
@@ -17,8 +18,8 @@ let interval;
 let currentScore = 0;
 let currentLives = 2;
 let pauseOverlay;
-let isGameOver = false;
-let isPaused = false;
+export let isGameOver = false;
+export let isPaused = false;
 
 // Setup game over menu
 function initGameOverOverlay() {
@@ -136,6 +137,7 @@ function loseLife() {
 }
 
 async function gameOver() {
+  // Display final score
   if (!isGameOver) {
     isGameOver = true;
     const finalScore = document.getElementById("final-score");
@@ -191,17 +193,25 @@ function restartGame() {
   score.textContent = "0";
 
   // Reset lives
-  currentLives = 3;
+  currentLives = 3;  
   livesDisplay.textContent = currentLives;
-
-  // Reset game elements
-  const grid = document.getElementById("grid");
-  if (grid) grid.innerHTML = "";
-  createLine(30);
 
   // Reset game state
   isGameOver = false;
   isPaused = false;
+
+  clearInvaders();
+  clearProtectionBlocks();
+
+  respawnInvaders();
+  createProtectionBlocks();
+
+  // Reinitialize spaceship position
+  const spaceship = document.getElementById("spaceship");
+  if (spaceship) {
+      spaceship.style.left = "50%";  // Position initiale
+      spaceship.style.transform = "translateX(-50%)";
+  }
 
   // Hide both menus and overlays
   gameOverOverlay.style.display = "none";
@@ -209,19 +219,19 @@ function restartGame() {
   pauseOverlay.style.display = "none";
   pauseMenu.style.display = "none";
 
+  // Remove visual effects from game elements
   mainElements.forEach((elementId) => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.classList.remove("game-over");
-      element.classList.remove("game-paused");
-    }
+      const element = document.getElementById(elementId);
+      if (element) {
+          element.classList.remove("game-over");
+          element.classList.remove("game-paused");
+      }
   });
 
   // Restart timer
   stopTimer();
   startTimer();
 }
-
 function returnToMenu() {
   stopTimer();
   isPaused = false;
@@ -255,6 +265,8 @@ document.addEventListener("DOMContentLoaded", function () {
     gameoverReturnMenuBtn.addEventListener("click", returnToMenu);
 });
 
+
+// Test function
 function addingScore() {
   console.log(currentScore);
   currentScore += 50000;
