@@ -1,7 +1,5 @@
 const grid = document.getElementById("grid")
-
-const bloc = document.createElement("div")
-
+const lineOfProtection = document.getElementById('line-of-protection');
 
 const createLine = (lineCount) => {
     for (let i = 1; i <= lineCount; i++) {
@@ -13,8 +11,7 @@ const createLine = (lineCount) => {
 }
 createLine(30);
 
-const createProtectionBlocks = () => {
-    const lineOfProtection = document.getElementById('line-of-protection');
+export const createProtectionBlocks = () => {
     for (let i = 0; i < 4; i++) {
         const block = document.createElement('div');
         block.className = 'protection-block wall';
@@ -27,12 +24,17 @@ const createProtectionBlocks = () => {
         const number = document.createElement('span');
         number.className = 'block-number';
         number.id = `block-number-${i}`;
-        number.textContent = '3'; // Valeur initiale
+        number.textContent = '3'; 
 
         block.appendChild(wallJPEG);
-        block.appendChild(number); // Ajoutez cette ligne
+        block.appendChild(number); 
         lineOfProtection.appendChild(block);
     }
 }
 
-    createProtectionBlocks();
+export const clearProtectionBlocks = () => {
+    const blocks = document.querySelectorAll('.protection-block');
+    blocks.forEach(block => {
+        block.remove();
+    });
+}

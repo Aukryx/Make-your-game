@@ -9,6 +9,7 @@
 // DEFINIR LE GAME OVER LORSQU'UN INVADER ATTEINT LA LIGNE FINALE
 
 import { Bullet, shootEnemy } from "../enemies/shootEnemy.js";
+import { createProtectionBlocks } from "../web/grid.js";
 
 
 let direction = 1;
@@ -125,6 +126,8 @@ export function setupGame() {
     }
   }
 
+  createProtectionBlocks()
+
 
     // Appel à shootEnemy pour chaque invader à intervalles réguliers
     setInterval(() => {
@@ -133,4 +136,35 @@ export function setupGame() {
         shootEnemy(randomInvader);
       }
     }, 3000); // Les envahisseurs tirent toutes les secondes
+  }
+
+  export function clearInvaders() {
+    // Supprimer les éléments DOM des envahisseurs
+    invaders.forEach(invader => {
+      invader.remove();
+    });
+    // Vider le tableau des envahisseurs
+    invaders = [];
+  }
+  
+  export function respawnInvaders() {
+    const game_container = document.getElementById("game-container");
+    const rows = 5;
+    const cols = 10;
+    const spacing = 40;
+    let invaderId = 1;
+  
+    // Réinitialiser la direction
+    direction = 1;
+    
+    // Recréer la grille d'envahisseurs
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const invader = new Invader(col * spacing + 50, row * spacing + 30, invaderId);
+        invader.id = invaderId;
+        invaderId++;
+        invaders.push(invader);
+        game_container.appendChild(invader.element);
+      }
+    }
   }

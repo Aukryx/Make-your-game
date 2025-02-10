@@ -1,3 +1,4 @@
+import { isGameOver, isPaused } from "../UI/menu.js";
 class Bullet {
   constructor(x, y) {
     this.x = x;

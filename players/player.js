@@ -5,6 +5,7 @@
 
 import { Bullet, throttle } from "./shoot.js";
 import { invaders } from "../enemies/invaders.js";
+import { isGameOver, isPaused } from "../UI/menu.js";
 
 const game_container = document.getElementById("game-container");
 
