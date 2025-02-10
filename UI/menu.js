@@ -163,6 +163,7 @@ function gameOver() {
           sendScore(score);
           sendBtn.disabled = true;
           sendBtn.style.background = "black";
+          init();
         }
       });
     } else {
