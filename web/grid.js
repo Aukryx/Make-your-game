@@ -1,40 +1,49 @@
-const grid = document.getElementById("grid")
-const lineOfProtection = document.getElementById('line-of-protection');
+const grid = document.getElementById("grid");
+const lineOfProtection = document.getElementById("line-of-protection");
 
 const createLine = (lineCount) => {
-    for (let i = 1; i <= lineCount; i++) {
-        const line = document.createElement("div");
-        line.setAttribute("class", "line");
-        line.id = `line-${i}`;
-        grid.appendChild(line);
-    }
-}
+  for (let i = 1; i <= lineCount; i++) {
+    const line = document.createElement("div");
+    line.setAttribute("class", "line");
+    line.id = `line-${i}`;
+    grid.appendChild(line);
+  }
+};
 createLine(30);
 
 export const createProtectionBlocks = () => {
-    for (let i = 0; i < 4; i++) {
-        const block = document.createElement('div');
-        block.className = 'protection-block wall';
-        block.id = `protection-block-${i}`;
+  const lineOfProtection = document.getElementById("line-of-protection");
+  const gameContainer = document.getElementById("game-container");
+  const containerWidth = gameContainer.offsetWidth;
+  const spacing = containerWidth / 5; // Divise l'espace en 5 pour avoir 4 blocs bien espacés
 
-        const wallJPEG = document.createElement('img');
-        wallJPEG.src = "/web/assets/wall1.png";
-        wallJPEG.alt = "wall";
+  for (let i = 0; i < 4; i++) {
+    const block = document.createElement("div");
+    block.className = "protection-block wall";
+    block.id = `protection-block-${i}`;
 
-        const number = document.createElement('span');
-        number.className = 'block-number';
-        number.id = `block-number-${i}`;
-        number.textContent = '3'; 
+    // Calcul de la position horizontale
+    // On commence à spacing pour avoir une marge au début
+    // et on multiplie par (i + 1) pour positionner chaque bloc
+    block.style.left = `${spacing * (i + 1) - 30}px`; // -30 pour centrer le bloc de 60px
 
-        block.appendChild(wallJPEG);
-        block.appendChild(number); 
-        lineOfProtection.appendChild(block);
-    }
-}
+    const wallJPEG = document.createElement("img");
+    wallJPEG.src = "/web/assets/wall1.png";
+    wallJPEG.alt = "wall";
 
+    const number = document.createElement("span");
+    number.className = "block-number";
+    number.id = `block-number-${i}`;
+    number.textContent = "3";
+
+    block.appendChild(wallJPEG);
+    block.appendChild(number);
+    lineOfProtection.appendChild(block);
+  }
+};
 export const clearProtectionBlocks = () => {
-    const blocks = document.querySelectorAll('.protection-block');
-    blocks.forEach(block => {
-        block.remove();
-    });
-}
+  const blocks = document.querySelectorAll(".protection-block");
+  blocks.forEach((block) => {
+    block.remove();
+  });
+};
