@@ -1,6 +1,5 @@
 // TO DO stop bullets game over and paused from enemies
 
-
 // DOM Elements
 const score = document.getElementById("score");
 const highscore = document.getElementById("highscore");
@@ -15,21 +14,22 @@ const gameOverOverlay = document.createElement("div");
 let time = 0;
 let timerStarted = false;
 let interval;
-let currentScore = 0
-let currentLives = 666;
+let currentScore = 0;
+let currentLives = 2;
 let pauseOverlay;
 let isGameOver = false;
 let isPaused = false;
 
-
 // Setup game over menu
-function initGameOverOverlay(){
-    livesDisplay.textContent = currentLives;
-    gameOverOverlay.className = 'game-over-overlay';
-    document.body.appendChild(gameOverOverlay);
-gameOverMenu.innerHTML = `
+function initGameOverOverlay() {
+  livesDisplay.textContent = currentLives;
+  gameOverOverlay.className = "game-over-overlay";
+  document.body.appendChild(gameOverOverlay);
+  gameOverMenu.innerHTML = `
   <h2 style="color: white; margin-bottom: 2rem;">Game Over</h2>
   <h3 id="final-score" style="color: white; margin-bottom: 2rem;"></h3>
+  <input type="text" id="name" placeholder="Invaders27" maxlength=15>
+  <button id="gameover-save-btn" class="pause-button">Send Score</button>
   <button id="gameover-restart-btn" class="pause-button">Restart</button>
   <button id="gameover-return-menu-btn" class="pause-button">Return Menu</button>
 `;
@@ -37,12 +37,12 @@ gameOverMenu.innerHTML = `
 
 // Initialize overlay and pause menu
 function initPauseOverlay() {
-    const gameDiv = document.getElementById("game-container");
-    pauseOverlay = document.createElement("div");
-    pauseOverlay.className = "pause-overlay";
-    gameDiv.appendChild(pauseOverlay);
-    
-    pauseMenu.innerHTML = `
+  const gameDiv = document.getElementById("game-container");
+  pauseOverlay = document.createElement("div");
+  pauseOverlay.className = "pause-overlay";
+  gameDiv.appendChild(pauseOverlay);
+
+  pauseMenu.innerHTML = `
         <h2 style="color: white; margin-bottom: 2rem;">Jeu en Pause</h2>
         <button id="pause-continue-btn" class="pause-button">Continuer</button>
         <button id="pause-restart-btn" class="pause-button">Recommencer</button>
@@ -51,184 +51,212 @@ function initPauseOverlay() {
 }
 
 function startTimer() {
-    if (!timerStarted) {
-        interval = setInterval(() => {
-            time += 1;
-            const minutes = Math.floor((time / 100) / 60);
-            const seconds = Math.floor((time / 100) % 60);
-            const milliseconds = time % 100;
-            
-            timer.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}:${String(milliseconds).padStart(2, "0")}`;
-        }, 10);
-        timerStarted = true;
-    }
+  if (!timerStarted) {
+    interval = setInterval(() => {
+      time += 1;
+      const minutes = Math.floor(time / 100 / 60);
+      const seconds = Math.floor((time / 100) % 60);
+      const milliseconds = time % 100;
+
+      timer.textContent = `${String(minutes).padStart(2, "0")}:${String(
+        seconds
+      ).padStart(2, "0")}:${String(milliseconds).padStart(2, "0")}`;
+    }, 10);
+    timerStarted = true;
+  }
 }
 
 function stopTimer() {
-    if (interval) {
-        clearInterval(interval);
-        interval = null;
-        timerStarted = false;
-    }
+  if (interval) {
+    clearInterval(interval);
+    interval = null;
+    timerStarted = false;
+  }
 }
 
 // Game control functions
 function handleKeyPress(event) {
-    if (isGameOver) return;
-    
-    switch(event.key) {
-        case 'Escape':
-            if (isPaused) {
-                resumeGame();
-            } else {
-                pauseGame();
-            }
-            break;
-        case 'k':
-            if (!isPaused) {
-                loseLife();
-            }
-            break;
-        case ' ':
-            addingScore()
-    }
+  if (isGameOver) return;
+
+  switch (event.key) {
+    case "Escape":
+      if (isPaused) {
+        resumeGame();
+      } else {
+        pauseGame();
+      }
+      break;
+    case "k":
+      if (!isPaused) {
+        loseLife();
+      }
+      break;
+    case " ":
+      addingScore();
+  }
 }
 
 function pauseGame() {
-    if (!isPaused && !isGameOver) {
-        isPaused = true;
-        stopTimer();
-        
-        mainElements.forEach((elementId) => {
-            const element = document.getElementById(elementId);
-            if (element) element.classList.add("game-paused");
-        });
-        
-        pauseOverlay.style.display = "block";
-        pauseMenu.style.display = "block";
-    }
+  if (!isPaused && !isGameOver) {
+    isPaused = true;
+    stopTimer();
+
+    mainElements.forEach((elementId) => {
+      const element = document.getElementById(elementId);
+      if (element) element.classList.add("game-paused");
+    });
+
+    pauseOverlay.style.display = "block";
+    pauseMenu.style.display = "block";
+  }
 }
 
 function resumeGame() {
-    if (isPaused) {
-        isPaused = false;
-        startTimer();
-        
-        mainElements.forEach((elementId) => {
-            const element = document.getElementById(elementId);
-            if (element) element.classList.remove("game-paused");
-        });
-        
-        pauseOverlay.style.display = "none";
-        pauseMenu.style.display = "none";
-    }
+  if (isPaused) {
+    isPaused = false;
+    startTimer();
+
+    mainElements.forEach((elementId) => {
+      const element = document.getElementById(elementId);
+      if (element) element.classList.remove("game-paused");
+    });
+
+    pauseOverlay.style.display = "none";
+    pauseMenu.style.display = "none";
+  }
 }
 
 function loseLife() {
-    currentLives--;
-    livesDisplay.textContent = currentLives;
-    
-    if (currentLives <= 0) {
-        gameOver();
-    }
+  currentLives--;
+  livesDisplay.textContent = currentLives;
+
+  if (currentLives <= 0) {
+    gameOver();
+  }
 }
 
 function gameOver() {
-    if (!isGameOver) {
-        isGameOver = true;
-        const finalScore = document.getElementById("final-score");
-        finalScore.textContent = `Final Score: ${score.textContent}`;
-        
-        stopTimer();
-        
-        mainElements.forEach(elementId => {
-            const element = document.getElementById(elementId);
-            if (element) element.classList.add('game-over');
-        });
-        
-        gameOverOverlay.style.display = 'block';
-        gameOverMenu.style.display = 'block';
+  if (!isGameOver) {
+    isGameOver = true;
+    const finalScore = document.getElementById("final-score");
+    finalScore.textContent = `Final Score: ${score.textContent}`;
+
+    stopTimer();
+
+    mainElements.forEach((elementId) => {
+      const element = document.getElementById(elementId);
+      if (element) element.classList.add("game-over");
+    });
+
+    const nameInput = document.getElementById("name");
+    const sendBtn = document.getElementById("gameover-save-btn");
+    if (sendBtn) {
+      sendBtn.addEventListener("click", () => {
+        const name = nameInput.value.trim();
+        if (name) {
+          const score = {
+            Name: name,
+            Score: currentScore,
+            Time: timer.textContent,
+            Rank: 0,
+          };
+          sendScore(score);
+          sendBtn.disabled = true;
+          sendBtn.style.background = "black";
+          init();
+        }
+      });
+    } else {
+      console.error("Save button not found in the game over menu");
     }
+
+    gameOverOverlay.style.display = "block";
+    gameOverMenu.style.display = "block";
+  }
 }
 
 function restartGame() {
-    // Reset time
-    time = 0;
-    timer.textContent = "00:00:00";
-    
-    // Reset score
-    currentScore = 0
-    score.textContent = "0";
-    
-    // Reset lives
-    currentLives = 3;
-    livesDisplay.textContent = currentLives;
-    
-    // Reset game elements
-    const grid = document.getElementById("grid");
-    if (grid) grid.innerHTML = "";
-    createLine(30);
-    
-    // Reset game state
-    isGameOver = false;
-    isPaused = false;
-    
-    // Hide both menus and overlays
-    gameOverOverlay.style.display = 'none';
-    gameOverMenu.style.display = 'none';
-    pauseOverlay.style.display = 'none';
-    pauseMenu.style.display = 'none';
-    
-    mainElements.forEach(elementId => {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.classList.remove('game-over');
-            element.classList.remove('game-paused');
-        }
-    });
-    
-    // Restart timer
-    stopTimer();
-    startTimer();
+  // Reset time
+  time = 0;
+  timer.textContent = "00:00:00";
+
+  // Reset score
+  currentScore = 0;
+  score.textContent = "0";
+
+  // Reset lives
+  currentLives = 3;
+  livesDisplay.textContent = currentLives;
+
+  // Reset game elements
+  const grid = document.getElementById("grid");
+  if (grid) grid.innerHTML = "";
+  createLine(30);
+
+  // Reset game state
+  isGameOver = false;
+  isPaused = false;
+
+  // Hide both menus and overlays
+  gameOverOverlay.style.display = "none";
+  gameOverMenu.style.display = "none";
+  pauseOverlay.style.display = "none";
+  pauseMenu.style.display = "none";
+
+  mainElements.forEach((elementId) => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.classList.remove("game-over");
+      element.classList.remove("game-paused");
+    }
+  });
+
+  // Restart timer
+  stopTimer();
+  startTimer();
 }
 
 function returnToMenu() {
-    stopTimer();
-    isPaused = false;
-    isGameOver = false;
-    window.location.href = "/";
+  stopTimer();
+  isPaused = false;
+  isGameOver = false;
+  window.location.href = "/";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    initPauseOverlay();
-    initGameOverOverlay();
-    startTimer();
-    document.addEventListener("keydown", handleKeyPress);
-    
-    const pauseContinueBtn = document.getElementById('pause-continue-btn');
-    const pauseRestartBtn = document.getElementById('pause-restart-btn');
-    const pauseReturnMenuBtn = document.getElementById('pause-return-menu-btn');
-    
-    if (pauseContinueBtn) pauseContinueBtn.addEventListener('click', resumeGame);
-    if (pauseRestartBtn) pauseRestartBtn.addEventListener('click', restartGame);
-    if (pauseReturnMenuBtn) pauseReturnMenuBtn.addEventListener('click', returnToMenu);
-    
-    const gameoverRestartBtn = document.getElementById('gameover-restart-btn');
-    const gameoverReturnMenuBtn = document.getElementById('gameover-return-menu-btn');
-    
-    if (gameoverRestartBtn) gameoverRestartBtn.addEventListener('click', restartGame);
-    if (gameoverReturnMenuBtn) gameoverReturnMenuBtn.addEventListener('click', returnToMenu);
-    
+  initPauseOverlay();
+  initGameOverOverlay();
+  startTimer();
+  document.addEventListener("keydown", handleKeyPress);
+
+  const pauseContinueBtn = document.getElementById("pause-continue-btn");
+  const pauseRestartBtn = document.getElementById("pause-restart-btn");
+  const pauseReturnMenuBtn = document.getElementById("pause-return-menu-btn");
+
+  if (pauseContinueBtn) pauseContinueBtn.addEventListener("click", resumeGame);
+  if (pauseRestartBtn) pauseRestartBtn.addEventListener("click", restartGame);
+  if (pauseReturnMenuBtn)
+    pauseReturnMenuBtn.addEventListener("click", returnToMenu);
+
+  const gameoverRestartBtn = document.getElementById("gameover-restart-btn");
+  const gameoverReturnMenuBtn = document.getElementById(
+    "gameover-return-menu-btn"
+  );
+
+  if (gameoverRestartBtn)
+    gameoverRestartBtn.addEventListener("click", restartGame);
+  if (gameoverReturnMenuBtn)
+    gameoverReturnMenuBtn.addEventListener("click", returnToMenu);
 });
 
 function addingScore() {
-    console.log(currentScore);
-    currentScore += 50000;
-    score.textContent = currentScore;
-    
-    const currentHighScore = parseInt(highscore.textContent);
-    
-    if (currentScore > currentHighScore) {
-        highscore.textContent = currentScore;
-    }
+  console.log(currentScore);
+  currentScore += 50000;
+  score.textContent = currentScore;
+
+  const currentHighScore = parseInt(highscore.textContent);
+
+  if (currentScore > currentHighScore) {
+    highscore.textContent = currentScore;
+  }
 }

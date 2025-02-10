@@ -1,50 +1,32 @@
 [
   {
-    "Name": "Jean",
+    "Name": "Test",
     "Rank": 1,
-    "Score": 224000,
-    "Time": "13:47:15"
+    "Score": 21300000,
+    "Time": "00:59:64"
   },
   {
-    "Name": "Player 1",
+    "Name": "Clem",
     "Rank": 2,
-    "Score": 1000,
-    "Time": "10:00"
+    "Score": 600000,
+    "Time": "00:06:24"
   },
   {
-    "Name": "Player 1",
+    "Name": "Gabriel",
     "Rank": 3,
-    "Score": 1000,
-    "Time": "10:00"
+    "Score": 500000,
+    "Time": "00:08:27"
   },
   {
-    "Name": "Test Player",
+    "Name": "Vincent",
     "Rank": 4,
-    "Score": 703,
-    "Time": "2025-01-27T13:20:55.942Z"
+    "Score": 200000,
+    "Time": "00:04:73"
   },
   {
-    "Name": "Test Player",
+    "Name": "qsdqsd",
     "Rank": 5,
-    "Score": 361,
-    "Time": "2025-01-27T13:20:46.054Z"
-  },
-  {
-    "Name": "Test Player",
-    "Rank": 6,
-    "Score": 267,
-    "Time": "2025-01-27T13:19:59.561Z"
-  },
-  {
-    "Name": "Test Player",
-    "Rank": 7,
-    "Score": 39,
-    "Time": "2025-01-27T13:20:14.445Z"
-  },
-  {
-    "Name": "Test Player",
-    "Rank": 8,
-    "Score": 19,
-    "Time": "2025-01-27T13:20:12.191Z"
+    "Score": 0,
+    "Time": "00:01:19"
   }
 ]
