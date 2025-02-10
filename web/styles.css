@@ -117,17 +117,23 @@ header {
 }
 
 #line-of-protection {
+  display: flex;
+  justify-content: space-around;
   width: 100%;
   position: absolute;
   bottom: 100px;
-  left: 0;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .protection-block {
-  position: absolute;
+  position: relative;
   width: 60px;
   height: 60px;
-  bottom: 23%;
+  flex-shrink: 0;
+  flex-basis: 60px; /* Taille fixe */
+  min-width: 60px; /* Empêche le rétrécissement */
+  min-height: 60px;
 }
 .protection-block img {
   position: absolute;
@@ -145,14 +151,14 @@ header {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 24px;
-  color: #ff0000;
+  color: #FF0000;
   text-shadow: 2px 2px 4px black;
   z-index: 1;
   pointer-events: none; /* Empêche l'interaction avec le numéro */
   flex-shrink: 0; /* Empêche le redimensionnement */
 }
 
-.wall img {
+.wall img{
   width: 60px;
   height: 60px;
   flex-shrink: 0; /* Empêche le redimensionnement */
@@ -452,4 +458,4 @@ header {
   height: 2px;
   z-index: 1;
   background-color: red;
-}
+ }
