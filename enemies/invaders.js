@@ -10,6 +10,7 @@
 
 import { Bullet, shootEnemy } from "../enemies/shootEnemy.js";
 import { createProtectionBlocks } from "../web/grid.js";
+import { gameOver } from "../UI/menu.js";
 
 
 let direction = 1;
@@ -115,6 +116,7 @@ export function setupGame() {
   const cols = 10;
   const spacing = 40;
   let invaderId = 1
+    createProtectionBlocks()
   
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
@@ -125,9 +127,6 @@ export function setupGame() {
       game_container.appendChild(invader.element);
     }
   }
-
-  createProtectionBlocks()
-
 
     // Appel à shootEnemy pour chaque invader à intervalles réguliers
     setInterval(() => {
