@@ -1,8 +1,4 @@
 
-//TO DO : Quand je met la pause, la position des balles change, ma théorie est que la balle qui n'est pas dans le menu pause a comme position 0 en vertical
-//le bord de l'écran alors que dans le menu pause, la position 0 est le bas du header.
-//Dans la console, la position Y de la balle ne bouge pas quand je met pause. 
-
 import { Bullet, throttle } from "./shoot.js";
 import { invaders } from "../enemies/invaders.js";
 import { isGameOver, isPaused } from "../UI/menu.js";
@@ -93,6 +89,11 @@ function gameLoop(timestamp) {
   const deltaTime = (timestamp - lastTime) / 1000;
   lastTime = timestamp;
   player.move(direction, deltaTime);
+
+  if (keys.Space) {
+    throttledShoot(); 
+  }
+  
   player.updateBullets(invaders);
   requestAnimationFrame(gameLoop);
 }
@@ -125,9 +126,18 @@ const updateDirection = () => {
 const throttledShoot = throttle(() => {
   player.shoot();
 }, 500);
-
+let keypressed = {}
 window.addEventListener("keydown", (event) => {
   if (isPaused || isGameOver) return;
+  keypressed[event.code] = true
+
+// console.log(keypressed);
+
+  if ((keypressed["ArrowLeft"] || keypressed["ArrowRight"]) && keypressed["Space"]) {
+    keys[event.key] = true;
+    updateDirection();
+    throttledShoot();
+  }
 
   if (event.key in keys) {
     keys[event.key] = true;
@@ -142,6 +152,7 @@ window.addEventListener("keydown", (event) => {
 window.addEventListener("keyup", (event) => {
   if (event.key in keys) {
     keys[event.key] = false;
+    delete keypressed[event.code] 
     updateDirection();
   }
 });
