@@ -13,6 +13,7 @@ async function init() {
     addToggleButton();
     createPaginationControls();
     if (VERBOSE >= 1) console.log(ranks);
+    displayRanks(ranks);
   } catch (error) {
     console.error("Failed to initialize leaderboard:", error);
   }
