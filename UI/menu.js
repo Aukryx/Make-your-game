@@ -101,8 +101,6 @@ function handleKeyPress(event) {
         loseLife();
       }
       break;
-    case " ":
-      addingScore();
   }
 }
 
@@ -269,17 +267,3 @@ document.addEventListener("DOMContentLoaded", function () {
   if (gameoverReturnMenuBtn)
     gameoverReturnMenuBtn.addEventListener("click", returnToMenu);
 });
-
-
-// Test function
-function addingScore() {
-  console.log(currentScore);
-  currentScore += 50000;
-  score.textContent = currentScore;
-
-  const currentHighScore = parseInt(highscore.textContent);
-
-  if (currentScore > currentHighScore) {
-    highscore.textContent = currentScore;
-  }
-}
