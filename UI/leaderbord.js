@@ -157,9 +157,10 @@ async function getRanks() {
 
 async function sendScore(score) {
   try {
+    const scr = document.getElementById("score");
     const data = {
       Name: score.Name,
-      Score: score.Score,
+      Score: scr.textContent,
       Time: score.Time,
       Rank: 0,
     };

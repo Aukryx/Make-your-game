@@ -20,6 +20,10 @@ function gameLoop(timestamp) {
       moveInvaders();
       lastMoveTime = timestamp;
     }
+
+    if (invaders.length <= 0) {
+      respawnInvaders();
+    }
   }
 
   requestAnimationFrame(gameLoop);

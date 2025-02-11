@@ -30,8 +30,14 @@
     "Time": "00:04:73"
   },
   {
-    "Name": "qsdqsd",
+    "Name": "FinalTest",
     "Rank": 6,
+    "Score": 150,
+    "Time": "00:04:74"
+  },
+  {
+    "Name": "qsdqsd",
+    "Rank": 7,
     "Score": 0,
     "Time": "00:01:19"
   }
