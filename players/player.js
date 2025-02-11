@@ -84,7 +84,7 @@ class Player {
 }
 
 
-export const player = new Player(grid);
+export const player = new Player(game_container);
 
 let lastTime = 0;
 let direction = 0;

@@ -109,16 +109,13 @@ function shootEnemy(invader) {
   bullet.launch();
 }
 
-export function clearEnemyBullets() {
-  const enemyBullets = document.querySelectorAll('.bullet');
-  enemyBullets.forEach(bullet => {
-      if (bullet.style.backgroundColor === 'blue') {
-          const bulletInstance = bullet._bulletInstance;
-          if (bulletInstance && bulletInstance.moveInterval) {
-              clearInterval(bulletInstance.moveInterval);
-          }
-          bullet.remove();
-      }
+export function cleanupAllBullets() {
+  const bullets = document.querySelectorAll('.bullet');
+  bullets.forEach(bullet => {
+    const bulletInstance = bullet._bulletInstance;
+    if (bulletInstance) {
+      bulletInstance.destroy();
+    }
   });
 }
 

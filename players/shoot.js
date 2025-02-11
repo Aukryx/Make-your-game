@@ -69,11 +69,4 @@ function throttle(func, limit) {
   };
 }
 
-export function clearPlayerBullets() {
-  const playerBullets = document.querySelectorAll('.bullet');
-  playerBullets.forEach(bullet => {
-          bullet.remove()
-  });
-}
-
 export { Bullet, throttle };

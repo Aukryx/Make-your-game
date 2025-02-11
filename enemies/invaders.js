@@ -16,6 +16,7 @@ import { gameOver } from "../UI/menu.js";
 let direction = 1;
 export let invaders = [];
 let gameWidth = document.getElementById("game-container").clientWidth;
+let shootingInterval; 
 
 class Invader {
   constructor(x, y, id) {
@@ -127,14 +128,17 @@ export function setupGame() {
       game_container.appendChild(invader.element);
     }
   }
+  if (shootingInterval) {
+    clearInterval(shootingInterval);
+  }
 
     // Appel à shootEnemy pour chaque invader à intervalles réguliers
-    setInterval(() => {
+    shootingInterval = setInterval(() => {
       const randomInvader = invaders[Math.floor(Math.random() * invaders.length)];
       if (randomInvader) {
         shootEnemy(randomInvader);
       }
-    }, 3000); // Les envahisseurs tirent toutes les secondes
+    }, 3000);
   }
 
   export function clearInvaders() {
@@ -165,5 +169,12 @@ export function setupGame() {
         invaders.push(invader);
         game_container.appendChild(invader.element);
       }
+    }
+  }
+
+  export function clearShootingInterval() {
+    if (shootingInterval) {
+      clearInterval(shootingInterval);
+      shootingInterval = null;
     }
   }

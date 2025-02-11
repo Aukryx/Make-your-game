@@ -1,16 +1,3 @@
-const grid = document.getElementById("grid");
-const lineOfProtection = document.getElementById("line-of-protection");
-
-const createLine = (lineCount) => {
-  for (let i = 1; i <= lineCount; i++) {
-    const line = document.createElement("div");
-    line.setAttribute("class", "line");
-    line.id = `line-${i}`;
-    grid.appendChild(line);
-  }
-};
-createLine(30);
-
 export const createProtectionBlocks = () => {
   const lineOfProtection = document.getElementById("line-of-protection");
   const gameContainer = document.getElementById("game-container");

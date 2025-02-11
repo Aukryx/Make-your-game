@@ -1,14 +1,14 @@
 import { respawnInvaders, clearInvaders } from "../enemies/invaders.js";
 import { createProtectionBlocks, clearProtectionBlocks } from "../web/grid.js";
-import { clearEnemyBullets } from "../enemies/shootEnemy.js";
-import { clearPlayerBullets } from "../players/shoot.js";
+import { cleanupAllBullets } from "../enemies/shootEnemy.js";
+import { clearShootingInterval } from "../enemies/invaders.js";
 
 // DOM Elements
 const score = document.getElementById("score");
 const highscore = document.getElementById("highscore");
 const timer = document.getElementById("time");
 export const livesDisplay = document.getElementById("lives"); // Export livesDisplay
-const mainElements = ["grid", "line-of-protection", "spaceship"];
+const mainElements = ["line-of-protection", "spaceship"];
 const gameOverMenu = document.getElementById("game-over-menu");
 const pauseMenu = document.getElementById("pause-menu");
 const gameOverOverlay = document.createElement("div");
@@ -61,19 +61,20 @@ function initPauseOverlay() {
 }
 
 function startTimer() {
-  if (!timerStarted) {
-    interval = setInterval(() => {
-      time += 1;
-      const minutes = Math.floor(time / 100 / 60);
-      const seconds = Math.floor((time / 100) % 60);
-      const milliseconds = time % 100;
+  stopTimer();
+  timerStarted = false;
 
-      timer.textContent = `${String(minutes).padStart(2, "0")}:${String(
-        seconds
-      ).padStart(2, "0")}:${String(milliseconds).padStart(2, "0")}`;
-    }, 10);
-    timerStarted = true;
-  }
+  interval = setInterval(() => {
+    time += 1;
+    const minutes = Math.floor(time / 100 / 60);
+    const seconds = Math.floor((time / 100) % 60);
+    const milliseconds = time % 100;
+
+    timer.textContent = `${String(minutes).padStart(2, "0")}:${String(
+      seconds
+    ).padStart(2, "0")}:${String(milliseconds).padStart(2, "0")}`;
+  }, 10);
+  timerStarted = true;
 }
 
 function stopTimer() {
@@ -186,6 +187,7 @@ export async function gameOver() {
 
 function restartGame() {
   // Reset time
+  stopTimer()
   time = 0;
   timer.textContent = "00:00:00";
 
@@ -201,8 +203,7 @@ function restartGame() {
   isGameOver = false;
   isPaused = false;
 
-  clearEnemyBullets()
-  clearPlayerBullets()
+  cleanupAllBullets()
   clearInvaders();
   clearProtectionBlocks();
 
@@ -237,6 +238,7 @@ function restartGame() {
 }
 function returnToMenu() {
   stopTimer();
+  clearShootingInterval()
   isPaused = false;
   isGameOver = false;
   window.location.href = "/";
