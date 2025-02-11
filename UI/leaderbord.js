@@ -160,10 +160,12 @@ async function sendScore(score) {
     const scr = document.getElementById("score");
     const data = {
       Name: score.Name,
-      Score: scr.textContent,
+      Score: parseInt(scr.textContent),
       Time: score.Time,
       Rank: 0,
     };
+
+    console.log(data);
 
     const response = await fetch("/api/scores", {
       method: "POST",
