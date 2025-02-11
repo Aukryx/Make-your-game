@@ -10,8 +10,9 @@
 
 import { Bullet, shootEnemy } from "../enemies/shootEnemy.js";
 import { createProtectionBlocks } from "../web/grid.js";
-import { gameOver } from "../UI/menu.js";
+import { gameOver, isGameOver, isPaused } from "../UI/menu.js";
 
+const INVADER_STEP = 2;
 
 let direction = 1;
 export let invaders = [];
@@ -69,12 +70,9 @@ export function moveInvaders() {
   const margin = 20;
   
   invaders.forEach((invader) => {
-    invader.x += direction;
+    invader.x += direction * INVADER_STEP; // Utiliser INVADER_STEP pour un mouvement plus rapide
     
-    if (
-      invader.x <= margin ||
-      invader.x >= gameWidth - invader.width - margin
-    ) {
+    if (invader.x <= margin || invader.x >= gameWidth - invader.width - margin) {
       touchedEdge = true;
     }
   });
@@ -84,7 +82,6 @@ export function moveInvaders() {
     const game = document.getElementById("game-container");
     invaders.forEach((invader) => {
       invader.y += 15;
-      //Collision avec la bordure du bas
       if (invader.y > game.offsetHeight - invader.height) {
         invader.remove();
       }
@@ -92,7 +89,7 @@ export function moveInvaders() {
   }
   
   invaders.forEach((invader) => invader.updatePosition());
-  setInterval(checkGameOverLine, 100);
+  checkGameOverLine();
 }
 
 function checkGameOverLine() {
@@ -112,34 +109,39 @@ export function setupGame() {
   const gameOverLine = document.createElement('div');
   gameOverLine.className = 'game-over-line';
   document.getElementById('game-container').appendChild(gameOverLine);
-  // Create invaders grid
+  
   const rows = 5;
   const cols = 10;
   const spacing = 40;
-  let invaderId = 1
-    createProtectionBlocks()
+  let invaderId = 1;
+  
+  createProtectionBlocks();
   
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const invader = new Invader(col * spacing + 50, row * spacing + 30, invaderId);
-      invader.id = invaderId
-      invaderId ++
+      invader.id = invaderId;
+      invaderId++;
       invaders.push(invader);
       game_container.appendChild(invader.element);
     }
   }
+
+  // Nettoyer l'ancien intervalle de tir
   if (shootingInterval) {
     clearInterval(shootingInterval);
   }
 
-    // Appel à shootEnemy pour chaque invader à intervalles réguliers
-    shootingInterval = setInterval(() => {
+  // Créer un nouvel intervalle de tir plus fréquent
+  shootingInterval = setInterval(() => {
+    if (!isPaused && !isGameOver && invaders.length > 0) {
       const randomInvader = invaders[Math.floor(Math.random() * invaders.length)];
       if (randomInvader) {
         shootEnemy(randomInvader);
       }
-    }, 3000);
-  }
+    }
+  }, 1500); // Réduit à 1.5 secondes au lieu de 3 secondes
+}
 
   export function clearInvaders() {
     // Supprimer les éléments DOM des envahisseurs
