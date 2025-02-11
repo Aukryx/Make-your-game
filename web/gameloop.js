@@ -1,10 +1,15 @@
-import { setupGame, moveInvaders } from "../enemies/invaders.js";
+import {
+  setupGame,
+  moveInvaders,
+  respawnInvaders,
+  invaders,
+} from "../enemies/invaders.js";
 import { isGameOver, isPaused } from "../UI/menu.js";
 // import { handleCollisions } from "../players/collisions.js";
 
 let gameState = {
   player: null,
-  invaders: []
+  invaders: [],
 };
 
 function gameInit() {
@@ -15,9 +20,12 @@ function gameInit() {
 function gameLoop() {
   if (!isGameOver && !isPaused) {
     moveInvaders();
-    if (gameState.player){
+    if (gameState.player) {
+      handleCollisions(gameState.player, window.invaders);
+    }
 
-      handleCollisions(gameState.player , window.invaders)
+    if (invaders.length <= 0) {
+      respawnInvaders();
     }
   }
 

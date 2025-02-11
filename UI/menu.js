@@ -138,7 +138,7 @@ function loseLife() {
   }
 }
 
-async function gameOver() {
+export async function gameOver() {
   // Display final score
   if (!isGameOver) {
     isGameOver = true;
@@ -189,15 +189,15 @@ function restartGame() {
   score.textContent = "0";
 
   // Reset lives
-  currentLives = 3;  
+  currentLives = 3;
   livesDisplay.textContent = currentLives;
 
   // Reset game state
   isGameOver = false;
   isPaused = false;
 
-  clearEnemyBullets()
-  clearPlayerBullets()
+  clearEnemyBullets();
+  clearPlayerBullets();
   clearInvaders();
   clearProtectionBlocks();
 
@@ -207,8 +207,8 @@ function restartGame() {
   // Reinitialize spaceship position
   const spaceship = document.getElementById("spaceship");
   if (spaceship) {
-      spaceship.style.left = "50%";  // Position initiale
-      spaceship.style.transform = "translateX(-50%)";
+    spaceship.style.left = "50%"; // Position initiale
+    spaceship.style.transform = "translateX(-50%)";
   }
 
   // Hide both menus and overlays
@@ -219,11 +219,11 @@ function restartGame() {
 
   // Remove visual effects from game elements
   mainElements.forEach((elementId) => {
-      const element = document.getElementById(elementId);
-      if (element) {
-          element.classList.remove("game-over");
-          element.classList.remove("game-paused");
-      }
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.classList.remove("game-over");
+      element.classList.remove("game-paused");
+    }
   });
 
   // Restart timer
@@ -263,10 +263,8 @@ document.addEventListener("DOMContentLoaded", function () {
     gameoverReturnMenuBtn.addEventListener("click", returnToMenu);
 });
 
-
 // Test function
 function addingScore() {
-  console.log(currentScore);
   currentScore += 50000;
   score.textContent = currentScore;
 
