@@ -1,8 +1,13 @@
-import { setupGame, moveInvaders } from "../enemies/invaders.js";
+import {
+  setupGame,
+  moveInvaders,
+  respawnInvaders,
+  invaders,
+} from "../enemies/invaders.js";
 import { isGameOver, isPaused } from "../UI/menu.js";
 
 let lastMoveTime = 0;
-const MOVE_INTERVAL = 16; 
+const MOVE_INTERVAL = 16;
 
 function gameInit() {
   setupGame();

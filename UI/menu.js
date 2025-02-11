@@ -19,7 +19,7 @@ let timerStarted = false;
 let interval;
 let currentScore = 0;
 export let currentLives = {
-  value: 3
+  value: 3,
 };
 let pauseOverlay;
 export let isGameOver = false;
@@ -27,7 +27,7 @@ export let isPaused = false;
 
 // Update lives display
 export function updateLivesDisplay() {
-    livesDisplay.textContent = currentLives.value;
+  livesDisplay.textContent = currentLives.value;
 }
 
 // Setup game over menu
@@ -187,7 +187,7 @@ export async function gameOver() {
 
 function restartGame() {
   // Reset time
-  stopTimer()
+  stopTimer();
   time = 0;
   timer.textContent = "00:00:00";
 
@@ -196,14 +196,14 @@ function restartGame() {
   score.textContent = "0";
 
   // Reset lives
-  currentLives.value = 3;  
+  currentLives.value = 3;
   livesDisplay.textContent = currentLives.value;
 
   // Reset game state
   isGameOver = false;
   isPaused = false;
 
-  cleanupAllBullets()
+  cleanupAllBullets();
   clearInvaders();
   clearProtectionBlocks();
 
@@ -213,8 +213,8 @@ function restartGame() {
   // Reinitialize spaceship position
   const spaceship = document.getElementById("spaceship");
   if (spaceship) {
-      spaceship.style.left = "50%";  // Position initiale
-      spaceship.style.transform = "translateX(-50%)";
+    spaceship.style.left = "50%"; // Position initiale
+    spaceship.style.transform = "translateX(-50%)";
   }
 
   // Hide both menus and overlays
@@ -225,11 +225,11 @@ function restartGame() {
 
   // Remove visual effects from game elements
   mainElements.forEach((elementId) => {
-      const element = document.getElementById(elementId);
-      if (element) {
-          element.classList.remove("game-over");
-          element.classList.remove("game-paused");
-      }
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.classList.remove("game-over");
+      element.classList.remove("game-paused");
+    }
   });
 
   // Restart timer
@@ -238,7 +238,7 @@ function restartGame() {
 }
 function returnToMenu() {
   stopTimer();
-  clearShootingInterval()
+  clearShootingInterval();
   isPaused = false;
   isGameOver = false;
   window.location.href = "/";
